@@ -10,7 +10,7 @@ DESC
 s.homepage         = 'https://github.com/samaratech/STProfileLibrary'
 
 s.license          = { :type => 'MIT', :file => 'LICENSE' }
-s.author           = { 'Farmoodhipl' => 'md.farmood@hipl.co.in' }
+s.author           = { 'samaratech' => 'md.farmood@hipl.co.in' }
 
 s.source           = { :git => 'https://github.com/samaratech/STProfileLibrary.git', :tag => s.version.to_s }
 s.swift_version = "4.2"
