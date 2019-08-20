@@ -1,0 +1,16 @@
+PODS:
+  - STProfileLibrary (0.1.0)
+
+DEPENDENCIES:
+  - STProfileLibrary (from `../`)
+
+EXTERNAL SOURCES:
+  STProfileLibrary:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  STProfileLibrary: 351cf54d0bce0cdd02dc6033eead0f313ae4e8c0
+
+PODFILE CHECKSUM: d9d83a2f32ab1b7342929bc39c73c23c38a591f8
+
+COCOAPODS: 1.7.5

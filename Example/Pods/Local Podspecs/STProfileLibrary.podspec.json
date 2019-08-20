@@ -1,0 +1,22 @@
+{
+  "name": "STProfileLibrary",
+  "version": "0.1.0",
+  "summary": "A short description of STProfileLibrary.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Farmoodhipl/STProfileLibrary",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Farmoodhipl": "md.farmood@hipl.co.in"
+  },
+  "source": {
+    "git": "https://github.com/Farmoodhipl/STProfileLibrary.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "STProfileLibrary/Classes/**/*"
+}

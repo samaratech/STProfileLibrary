@@ -1,0 +1,6 @@
+framework module STProfileLibrary {
+  umbrella header "STProfileLibrary-umbrella.h"
+
+  export *
+  module * { export * }
+}
