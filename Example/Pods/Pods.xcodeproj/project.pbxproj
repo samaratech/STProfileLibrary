@@ -125,7 +125,6 @@
 		B35D0079D8AD7710088BEDA8CF8E7EC8 /* CountryPickerSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C09B431032FA09B25CE5DAE40153FC36 /* CountryPickerSwift-dummy.m */; };
 		B4BBC02E63432E2A233564E86BCECDB2 /* PreferenceResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEB5C65FCFEFF49FB74CEB837F81B31 /* PreferenceResponseData.swift */; };
 		B844C894D95D98D68E226715547930E0 /* DelegateListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E72852CF46E091A5A18C2D5FC5473 /* DelegateListVC.swift */; };
-		B9673F90230C396C00242B17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305F9C44EA7F50E2D4338DDD7B4C2B15 /* Assets.xcassets */; };
 		BA7BB2FF04CE1CAFC5238D1807EF0034 /* DPDKeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A40BEA38283EFE77A3DE67B99D98412 /* DPDKeyboardListener.swift */; };
 		BEE6B677416CA71C981D1D3F60B18C96 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4E7BCF2E31C4EF461B6C800195BC40 /* Alamofire.swift */; };
 		BF9A01FFAA109F2C399F4F5DB0D0E671 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11844372755AA7452F3D9EDEB584F08 /* MBProgressHUD.framework */; };
@@ -163,6 +162,7 @@
 		F1DEB9A25972009836A474734EF6094B /* Pods-STProfileLibrary_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A188746FC4EC0F0EAAC8E0EB129E182 /* Pods-STProfileLibrary_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F3C500CDBAC4D62309685D0FDBAD2DBE /* JTAppleCalendar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 24B18641D5D1BF26E650586178A7888C /* JTAppleCalendar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F462CA7FADF7465783503E0814B7D61C /* BaseTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF45BD9FE581E2D7B3A4DEDB9AA398B7 /* BaseTextView.swift */; };
+		F4B7278726A6BAD69C6384CCB9ADA3E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305F9C44EA7F50E2D4338DDD7B4C2B15 /* Assets.xcassets */; };
 		F6F2235F5346B15F2061C82B1629D457 /* BaseTextView.xib in Sources */ = {isa = PBXBuildFile; fileRef = DAC47726AF3FFC3FB0F356D6C99A56ED /* BaseTextView.xib */; };
 		F7B74645E07C39771156A1FA413B98D4 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CC31A7D4C2B93CC3D60189FF62BCD39 /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA622DEEFD9F6AAE6B14A2D51785BE08 /* DateTextFieldCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = D94A7F46F916CDBAE707632DA121419F /* DateTextFieldCell.xib */; };
@@ -1414,7 +1414,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9673F90230C396C00242B17 /* Assets.xcassets in Resources */,
 				C9198AC4E9644453FCE7BDF618EF058F /* STProfileLibrary.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1464,6 +1463,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B7278726A6BAD69C6384CCB9ADA3E8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

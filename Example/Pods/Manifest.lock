@@ -6,7 +6,7 @@ PODS:
   - IQKeyboardManagerSwift (6.4.1)
   - JTAppleCalendar (7.1.7)
   - MBProgressHUD (1.1.0)
-  - STProfileLibrary (1.0.1):
+  - STProfileLibrary (1.0.2):
     - Alamofire
     - CountryPickerSwift
     - DropDown
@@ -40,7 +40,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
   JTAppleCalendar: 96da4d8388fa6dc82d6a60d41ef36a015e167e2f
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  STProfileLibrary: 93e86f7c0429304c0d1a40941571211cad46cf9a
+  STProfileLibrary: 2c9972e165def4a7fc7b38adb02b387f94078f48
 
 PODFILE CHECKSUM: 365c16d9b2373d84e2ec93f9c8b5d5c7e74f06f2
 

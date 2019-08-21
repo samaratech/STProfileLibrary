@@ -408,6 +408,7 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
             else {
                 cell.View_date.generic_textField.text = ""
             }
+            cell.View_date.updateVC(vc: self)
             //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
             return cell
         }
