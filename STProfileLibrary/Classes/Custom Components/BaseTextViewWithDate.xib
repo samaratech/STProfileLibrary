@@ -9,9 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BaseTextViewWithDate" customModule="ProfileLib2" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BaseTextViewWithDate" customModule="STProfileLibrary" customModuleProvider="target">
             <connections>
-                <outlet property="attachBtn" destination="uai-rn-USL" id="I9C-9B-48B"/>
+                <outlet property="attachBtn" destination="uai-rn-USL" id="10w-IX-ysy"/>
                 <outlet property="generic_textField" destination="517-43-YWX" id="oqB-J9-JCY"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="XAC-Nm-e6s"/>
                 <outlet property="sView" destination="XQW-fh-iAK" id="fUz-fc-QNx"/>

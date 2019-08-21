@@ -22,6 +22,7 @@ public class BaseTextViewWithDate : UIView {
     @IBOutlet weak var title_lbl: UILabel!
     @IBOutlet weak var generic_textField: UITextField!
     weak var Delegate:BaseDateViewDelegate!
+    @IBOutlet weak var attachBtn: UIButton!
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initializeView()
@@ -43,6 +44,11 @@ public class BaseTextViewWithDate : UIView {
         generic_textField.delegate = self
         sView.layer.borderColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1).cgColor
         sView.layer.borderWidth = 1
+        let image1 = UIImage(named: "attachment")
+        
+        self.attachBtn.setImage(image1, for: .selected)
+        self.attachBtn.setImage(image1, for: .normal)
+        self.attachBtn.setImage(image1, for: .highlighted)
         
     }
     public func updateVC(vc: UIViewController) {

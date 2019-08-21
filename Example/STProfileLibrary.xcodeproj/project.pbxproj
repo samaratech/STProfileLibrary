@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		07EDD3248B85247DC8E9456F /* STProfileLibrary.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = STProfileLibrary.podspec; path = ../STProfileLibrary.podspec; sourceTree = "<group>"; };
+		07EDD3248B85247DC8E9456F /* STProfileLibrary.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = STProfileLibrary.podspec; path = ../STProfileLibrary.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2D39279AB9E1BF156B9A06EC /* Pods-STProfileLibrary_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STProfileLibrary_Tests.release.xcconfig"; path = "Target Support Files/Pods-STProfileLibrary_Tests/Pods-STProfileLibrary_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		320C3A167F6DD6D70326914B /* Pods-STProfileLibrary_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STProfileLibrary_Example.release.xcconfig"; path = "Target Support Files/Pods-STProfileLibrary_Example/Pods-STProfileLibrary_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4ABF9A72A8B069099B84CF76 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
