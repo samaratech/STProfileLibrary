@@ -5,12 +5,15 @@
 //  Created by HIPL-GLOBYLOG on 7/30/19.
 //  Copyright © 2019 learning. All rights reserved.
 //
+import Foundation
+import UIKit
 
 class AttributProfileData:Decodable {
     let success: Bool?
     var data : DataAttribute?
 }
 class DataAttribute:Decodable {
+    var MULTIPLE_ROWS: String?
     var ATTRIBUTES:[AttributeForm]?
     var DETAIL:[DetailListProfile]?
 }
@@ -30,6 +33,8 @@ class ListData:Decodable  {
 }
 
 class AttributeForm:Decodable  {
+    
+    var cellHeight:CGFloat?
     var LOOKUP_TYPE_ID: String?
     var PROFILE_ATTRIBUTE_ID: String?
     var HR_PROFILE_ATTRIBUTE_ID: String?
@@ -46,7 +51,10 @@ class AttributeForm:Decodable  {
     var PROFILE_ATTTRIBUTE_HELP_ID: String?
     var PROFILE_ATTRIBUTE_HIDE_VALUE: String?
     var LOOKUP_ID: String?
-    var ADDITIONAL_ATTRIBUTES: [AddiProfileData]?  // array for drop down
+    var ADDITIONAL_ATTRIBUTES: [AddiProfileData]?
+    var imageData: [Data]?
+    // var imageData:[(Data , String)]?
+    // array for drop down
     
 }
 class AttributeFormClone:Decodable  {

@@ -92,10 +92,12 @@ public class BaseAddressView : UIView {
     
     @IBAction func showaddressView(_ sender: Any) {
         if profileGeoLabel == "0" {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+             let podBundle = Bundle(for: BaseAddressView.self)
+            let storyboard = UIStoryboard(name: "Main", bundle: podBundle)
             let viewCon = storyboard.instantiateViewController(withIdentifier :"SelectCountryViewController") as! SelectCountryViewController
             viewCon.textCountry = self.dropDownLbl
             viewCon.DelegateSelect = self
+            
             VC.present(viewCon, animated: true) {
                 
             }

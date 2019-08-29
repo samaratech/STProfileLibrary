@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="collecImageCell" customModule="STProfileLibrary" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="SCe-tt-hdX">
+                        <rect key="frame" x="5" y="5" width="65" height="65"/>
+                        <color key="backgroundColor" red="0.53877693410000005" green="0.71090203519999995" blue="0.88150161500000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USt-GH-uXB">
+                        <rect key="frame" x="50" y="0.0" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="Nbo-Yc-Lle"/>
+                            <constraint firstAttribute="height" constant="25" id="eqp-QV-sTJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <state key="normal" title="X">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="SCe-tt-hdX" secondAttribute="bottom" constant="5" id="0Cm-0i-Z9L"/>
+                <constraint firstItem="USt-GH-uXB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6zf-Mc-Jbm"/>
+                <constraint firstItem="SCe-tt-hdX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="7Co-MX-kNG"/>
+                <constraint firstAttribute="trailing" secondItem="USt-GH-uXB" secondAttribute="trailing" id="FL9-J3-xAc"/>
+                <constraint firstItem="SCe-tt-hdX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Qpf-uk-2M1"/>
+                <constraint firstAttribute="trailing" secondItem="SCe-tt-hdX" secondAttribute="trailing" constant="5" id="sDU-bH-KjJ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="crossBtn" destination="USt-GH-uXB" id="s0R-li-Qwo"/>
+                <outlet property="iconeImage" destination="SCe-tt-hdX" id="6yW-3T-p8G"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="plusIcon" width="16" height="16"/>
+    </resources>
+</document>

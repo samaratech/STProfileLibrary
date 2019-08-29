@@ -44,7 +44,7 @@ public class BaseTextViewWithDate : UIView {
         generic_textField.delegate = self
         sView.layer.borderColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1).cgColor
         sView.layer.borderWidth = 1
-        let image1 = UIImage(named: "attachment")
+        let image1 = UIImage(named: "calendar")
         
         self.attachBtn.setImage(image1, for: .selected)
         self.attachBtn.setImage(image1, for: .normal)
@@ -54,7 +54,6 @@ public class BaseTextViewWithDate : UIView {
     public func updateVC(vc: UIViewController) {
         self.viewVC = vc
     }
-    
     @IBAction func calendarClicked(_ sender: Any) {
         let podBundle = Bundle(for: ProfileCalender.self)
         let story = UIStoryboard(name: "Main", bundle: podBundle)
@@ -70,7 +69,7 @@ public class BaseTextViewWithDate : UIView {
             vc.selectedDate = self.selecteddate
             
         }
-        vc.requestDate_start = Date()
+      //  vc.requestDate_start = Date()
         viewVC.present(vc, animated: true, completion: nil)
         // viewVC.navigationController?.pushViewController(vc, animated: true)
         // presentVC(vc: vc)

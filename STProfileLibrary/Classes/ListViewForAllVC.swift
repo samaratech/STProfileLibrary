@@ -8,6 +8,7 @@ import UIKit
 import Alamofire
 
 class ListViewForAllVC: UIViewController {
+    
 @IBOutlet weak var tblView: UITableView!
     weak var delegateUpdate:updateProfileListData!
     var dataSetId: String?
@@ -15,7 +16,11 @@ class ListViewForAllVC: UIViewController {
     var obj_lookUpType: ProfileLookupType?
     var attributArray: [AttributeForm]!
     var attributArrayClone: [AttributeFormClone]!
+   // var imageDatArr = [Data]()
+    var imageDatArr = [(Data , String)]()
+//    ("Gabriel", "Kirkpatrick")
     @IBOutlet weak var lblTitle: UILabel!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +79,7 @@ class ListViewForAllVC: UIViewController {
         tblView.register(UINib(nibName: "AddressGeoCell", bundle: podBundleAddress), forCellReuseIdentifier: "AddressGeoCell")
         
         
+         tblView.register(UINib(nibName: "DocumentAttachCell", bundle: podBundleAddress), forCellReuseIdentifier: "DocumentAttachCell")
         
         if attributArray.count < 1 {
             tblView.isHidden = true
@@ -123,6 +129,16 @@ class ListViewForAllVC: UIViewController {
                     }
                     params["PROFILE_ATTRIBUTE_ID"] = item.PROFILE_ATTRIBUTE_ID ?? ""
                     params["PROFILE_ATTRIBUTE_TYPE"] = item.PROFILE_ATTRIBUTE_TYPE ?? ""
+                    if item.PROFILE_ATTRIBUTE_TYPE != nil && item.PROFILE_ATTRIBUTE_TYPE! == "F" {
+                        if item.imageData != nil && item.imageData!.count > 0{
+                         
+                            for img in item.imageData! {
+                            imageDatArr.append((img, item.PROFILE_ATTRIBUTE_ID ?? ""))
+                            }
+                          
+                        }
+                        
+                    }
                     
                     if item.LOOKUP_ID != nil && item.PROFILE_ATTRIBUTE_TYPE! == "L" {
                         
@@ -131,6 +147,7 @@ class ListViewForAllVC: UIViewController {
                     else {
                     params["PROFILE_ATTRIBUTE_DEFAULT_VALUE"] = item.PROFILE_ATTRIBUTE_DEFAULT_VALUE ?? ""
                     }
+                
                     params["PROFILE_ATTRIBUTE_SEQUENCE"] = item.PROFILE_ATTRIBUTE_SEQUENCE ?? ""
                     params["PROFILE_ATT_LOOKUP_FILTER_ID"] = item.PROFILE_ATT_LOOKUP_FILTER_ID ?? ""
                     params["PROFILE_ATTRIBUTE_GEO_LEVEL"] = item.PROFILE_ATTRIBUTE_GEO_LEVEL ?? ""
@@ -139,15 +156,71 @@ class ListViewForAllVC: UIViewController {
                     
                 }
                  var params2:Parameters = [String:Any]()
-                params2["ATTRIBUTES"] = array
+                var paramsimg:Parameters = [String:Any]()
+                paramsimg["ATTRIBUTES"] = array
+                params2["ATTRIBUTES"] = paramsimg
+                //params2["ATTRIBUTES"] = array
                 params2["LOOKUP_TYPE_ID"] = lookId
-               
                 params2["DATASET_ID"] = dataSetId ?? ""
-                
-                
                 let postParamHeaders = [String: String]()
                 
-                ServerCommunication.getDataWithGetWithDataResponse(url: "profileDataAddUpdate", parameter: params2, HeaderParams: postParamHeaders, methodType: .post, viewController: self, success: { (successResponseData) in
+                if imageDatArr.count > 0 {
+                    
+            ServerCommunication.postPictureAuthorizationHandler(url: "profileImageDataAddUpdate", postParam: params2, imageArr: imageDatArr, viewController: self, success: { (successResponseData) in
+                        if successResponseData.data != nil {
+                            if let json = successResponseData.result.value as? NSDictionary {
+                                if let succ = json["success"] as? Bool {
+                                    
+                                    if succ == true {
+                                        
+                                        var setId = ""
+                                        if let data = json["data"] as? NSDictionary {
+                                            if  let sid = data["DATASET_ID"] as? String {
+                                            setId = sid
+                                        }
+                                        }
+                                        
+                                        
+                                        if succ == true {
+                                            if let set_id = self.dataSetId {
+                                                setId = set_id
+                                                self.delegateUpdate.updateListData(attributArray: self.attributArray ,listId: setId,isUpdate: true)
+                                            }
+                                            else {
+                                                self.delegateUpdate.updateListData(attributArray: self.attributArray ,listId: setId,isUpdate: false)
+                                                
+                                            }
+                                          //  self.dismiss(animated: true, completion: nil)
+                                            
+                                            
+                                            
+                                        }
+                                        
+                                    }
+                                    else {
+                                        if let data = json["data"] as? NSDictionary {
+                                            let msg = data["message"] as! String
+                                            DataUtil.alertMessage(msg, viewController: self)
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                        else {
+                            
+                            
+                            
+                        }
+                        
+                    }, failure: { (successResponseDataerr) in
+                        
+                    })
+                    return
+                }
+ 
+                
+        ServerCommunication.getDataWithGetWithDataResponse(url: "profileDataAddUpdate", parameter: params2, HeaderParams: postParamHeaders, methodType: .post, viewController: self, success: { (successResponseData) in
                 if successResponseData.data != nil {
                         if let json = successResponseData.result.value as? NSDictionary {
             if let succ = json["success"] as? Bool {
@@ -223,6 +296,15 @@ class ListViewForAllVC: UIViewController {
                         if var types = serviceResponse.data?.ATTRIBUTES {
                             // types.remove(at: 0)
                         self.attributArray = types
+                            for data in self.attributArray {
+                                if data.PROFILE_ATTRIBUTE_TYPE! == "F" {
+                                data.cellHeight = 85.0
+                                }
+                                else {
+                                   data.cellHeight = 80.0
+                                }
+                                
+                            }
                             self.tblView.reloadData()
                             
                         }
@@ -279,7 +361,32 @@ class ListViewForAllVC: UIViewController {
     }
  }
 }
-extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextViewDelegate,BaseDateViewDelegate,BasePeriodDateDelegate,BaseDropDownDelegate, BaseAddressDelegate{
+extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextViewDelegate,BaseDateViewDelegate,BasePeriodDateDelegate,BaseDropDownDelegate, BaseAddressDelegate,BaseDocPickerDelegate{
+    func removeDocPickerImage(view: BaseDocumentPickerView, index: Int) {
+        if index == 0 {
+           // let obj = attributArray[view.tag]
+           // obj.cellHeight = 150.0
+            
+        }
+    }
+    func UpdateDocPickerImage(view: BaseDocumentPickerView, index: Int, image: [UIImage]) {
+        
+        let obj = attributArray[view.tag]
+        obj.imageData = [Data]()
+        if image.count < 1 {
+            obj.cellHeight = 85.0
+        }
+        else {
+         obj.cellHeight = 150.0
+        }
+        for img in image {
+            obj.imageData?.append(img.jpegData(compressionQuality: 0.75)!)
+           // imageDatArr.append((img.jpegData(compressionQuality: 0.75)!, obj.PROFILE_ATTRIBUTE_ID ?? ""))
+        }
+      //  imageDatArr = obj.imageData!
+         obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE = view.document_nameTF.text
+        self.tblView.reloadData()
+    }
     func UpdateAddressText(view: BaseAddressView, index: Int, text: String) {
             print("selected dropdown == \(view.tag)value and value",text)
         
@@ -327,7 +434,7 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
     //    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let obj = attributArray[indexPath.row]
-        
+        print("obj.PROFILE_ATTRIBUTE_TYPE ==",obj.PROFILE_ATTRIBUTE_TYPE!)
         if obj.PROFILE_ATTRIBUTE_TYPE! == "A" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as! TextFieldCell
             cell.BaseTFView.Delegate = self
@@ -391,10 +498,6 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
                 cell.dropDownBView.dropDownLbl.text = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE ?? ""
                 
             }
-            
-            
-            
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
             return cell
         }
         else if obj.PROFILE_ATTRIBUTE_TYPE! == "D"{
@@ -409,7 +512,6 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
                 cell.View_date.generic_textField.text = ""
             }
             cell.View_date.updateVC(vc: self)
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
             return cell
         }
         else if obj.PROFILE_ATTRIBUTE_TYPE! == "L"{
@@ -423,68 +525,45 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
                 for item in addiList {
                     nameArray.append(item.LOOKUP_MEANING!)
                 }
-               // let nameArray = ["Milan", "Ajendra", "Farmood","Satish","Ranjeet","MFD"]
         cell.dropDownBView.setArrayForDropDown(listArray: nameArray)
                 
         cell.dropDownBView.dropDownLbl.text = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE ?? ""
                 
             }
-            
-        
-            
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
             return cell
         }
+        else if obj.PROFILE_ATTRIBUTE_TYPE! == "F"{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentAttachCell") as! DocumentAttachCell
+            cell.doc_view.setController(vc: self)
+            cell.doc_view.Delegate = self
+            cell.doc_view.tag = indexPath.row
             
-      
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
-            
-            
-            /*
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DropDownCell") as! DropDownCell
-            cell.dropDownBView.Delegate = self
-            cell.dropDownBView.tag = indexPath.row
-            
-            cell.dropDownBView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
-            let nameArray = ["Milan", "Ajendra", "Farmood","Satish","Ranjeet","MFD"]
-            cell.dropDownBView.setArrayForDropDown(listArray: nameArray)
-      
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
-            return cell
-            */
-       
-        /*
-        if indexPath.row == 0 || indexPath.row == 4 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DateTextFieldCell") as! DateTextFieldCell
-            cell.View_date.Delegate = self
-            cell.View_date.tag = indexPath.row
-            cell.View_date.title_lbl.text = "Name"
-         
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
+            cell.doc_view.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
+            if let addiList = obj.ADDITIONAL_ATTRIBUTES {
+                var nameArray = [String]()
+                for item in addiList {
+                    nameArray.append(item.LOOKUP_MEANING!)
+                }
+   
+                
+               // cell.doc_view.dropDownLbl.text = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE ?? ""
+                
+            }
             return cell
         }
-        */
-        /*
-        if indexPath.row == 2 || indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DatePeriodTextFCell") as! DatePeriodTextFCell
-            cell.periodDate_view.Delegate = self
-            cell.periodDate_view.tag = indexPath.row
-             cell.periodDate_view.startDate_lbl.text = "Name1"
-            cell.periodDate_view.endDate_lbl.text = "Name2"
-         
-            //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
-            return cell
-        }
-        */
+  
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as! TextFieldCell
         cell.BaseTFView.Delegate = self
         cell.BaseTFView.tag = indexPath.row
-        cell.BaseTFView.title_lbl.text = "Name"
-      
-        //cell.setAddressInfoData(self.addressListDataArr[indexPath.row])
+        cell.BaseTFView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }  
+        let obj = attributArray[indexPath.row]
+        return obj.cellHeight ?? 80.00
+    }
+
 }
+
+
+

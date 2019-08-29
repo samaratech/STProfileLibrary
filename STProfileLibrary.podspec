@@ -32,6 +32,7 @@ s.dependency 'GooglePlacesSearchController'
 s.dependency 'MBProgressHUD'
 s.dependency 'Alamofire'
 s.dependency 'JTAppleCalendar', '~> 7.0'
+s.dependency 'SDWebImage'
 
 end
 

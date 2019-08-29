@@ -4,7 +4,7 @@
 //
 //  Created by HIPL-GLOBYLOG on 7/23/19.
 //  Copyright © 2019 learning. All rights reserved.
-//
+// https://stackoverflow.com/questions/29625133/convert-dictionary-to-json-in-swift
 
 import UIKit
 import Alamofire
@@ -98,5 +98,148 @@ class ServerCommunication: NSObject {
                 DataUtil.HideIndictorView()
             }
         }
+    }
+    class func postPictureAuthorizationHandler(url: String, postParam:Parameters,imageArr:[(Data , String)],viewController: UIViewController,success:@escaping(DataResponse<Any>) -> Void,failure:@escaping (NSDictionary)->() ) {
+        DataUtil.ShowIndictorView(IndicatoreTitle: "")
+        var params = postParam
+        params["LOCATION_ID"] = LOCATION_ID_profile
+        params["ORG_ID"] = ORG_ID_profile
+        params["SIGNIN_TYPE"] = SIGNIN_TYPE_profile
+        params["TOKEN"] = TOKEN_profile
+        let urlFinal = baseUrl_profile + url
+        print("urlFinal: \(urlFinal) ")
+        print("Post Parameter: \(params) ")
+       // print("Post HeaderParams: \(HeaderParams) ")
+        let modifiedURLString = baseUrl_profile + url
+        if params is Dictionary<String, String> {
+        }
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            var index = 0
+            for imageData in imageArr {
+                let aa = "PROFILE_ATTRIBUTE_DEFAULT_VALUE"
+              let keyy =   "\(aa)[]"
+                let file_name = imageData.1 + ".png"
+                multipartFormData.append(imageData.0, withName: keyy, fileName: file_name, mimeType: "image/jpeg")
+                index = index + 1
+            }
+            
+         
+            //   multipartFormData.append(jsonData)
+ 
+            for (key, value) in params {
+                print("value ==",value)
+                 print("key == ",key)
+                if value is String{
+                 //   print("value == ",value)
+                    
+                    let valueStr = value as! String
+                     multipartFormData.append(valueStr.data(using: String.Encoding.utf8)!, withName: key)
+                  
+                    
+                }
+                else if value is [String: [[String: String]]]{
+                    
+                    let stringsData = NSMutableData()
+                    let jsonData = try? JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions())
+                    let jsonString = NSString(data: jsonData!, encoding: String.Encoding.utf8.rawValue)
+                    
+                    /*
+                    for tag in tagsArray{
+                        if let stringData = jsonString?.data(using: String.Encoding.utf8.rawValue) {
+                            stringsData.append(stringData)
+                        }
+                    }
+                    */
+                    if let stringData = jsonString?.data(using: String.Encoding.utf8.rawValue) {
+                        stringsData.append(stringData)
+                    }
+                    
+                    multipartFormData.append(stringsData as Data, withName: key)
+                }
+            }
+            
+            
+            /*
+            for (key, value) in params {
+                if let tagsArray = value as? [String]{
+                    
+                    let stringsData = NSMutableData()
+                    for tag in tagsArray{
+                        if let stringData = tag.data(using: String.Encoding.utf8) {
+                            stringsData.append(stringData)
+                        }
+                    }
+                    
+                    multipartFormData.append(stringsData as Data, withName: key)
+                }
+                else if value is String{
+                    
+                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
+                    
+                }
+            }
+            */
+        }, to:modifiedURLString)
+        {
+            (result) in
+            switch result
+            {
+            case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (progress) in
+                    //Print progress
+                })
+                
+                upload.responseJSON
+                    {
+                        response in
+                        
+                        switch response.result{
+                        case .success( let value) :
+                           
+                            success(response)
+                            break
+                            
+                        case .failure( let error) :
+                           DataUtil.HideIndictorView()
+                            DispatchQueue.main.async {
+                    print("response ==",response); DataUtil.alertMessage(response.result.error!.localizedDescription, viewController: viewController)
+                                print(response.result.error!.localizedDescription)
+                               // alertMessase(withTitle: nil, message: response.result.error!.localizedDescription, okAction: {})
+                            }
+                            break
+                            
+                        }
+                        if let data = response.result.value{
+                            print(response.result.value)
+                            
+                            success(response)
+                             DataUtil.HideIndictorView()
+                        }
+                        
+                        
+                        
+                }
+                break
+                
+                
+            case .failure(let encodingError):
+                
+                DataUtil.HideIndictorView()
+                
+                if let err = encodingError as? URLError, err.code == .notConnectedToInternet {
+                } else {
+                    
+                }
+                
+                
+                
+                
+            }
+            
+        }
+        
+        
+        
+        
     }
 }

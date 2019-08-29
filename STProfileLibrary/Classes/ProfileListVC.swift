@@ -7,7 +7,7 @@
 
 import UIKit
 import Alamofire
-
+import SDWebImage
 class ProfileListVC: BaseProfileVC {
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var footrView: UIView!
@@ -16,9 +16,16 @@ class ProfileListVC: BaseProfileVC {
     var attributArray = [AttributeForm]()
     var attributArrayClone = [AttributeFormClone]()
     var detailArray = [DetailListProfile]()
-    
+    var buttonRightItem: UIBarButtonItem!
+    var heightOfFooter = 100.0
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 11.0, *) {
+            tblView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
+        
         if let obj = obj_lookUpType {
             self.title = obj.LOOKUP_TYPE ?? ""
         }
@@ -36,14 +43,30 @@ class ProfileListVC: BaseProfileVC {
         let podBundle = Bundle(for: ProfileListVC.self)
        // let image = UIImage(named: "plus_icon", in: podBundle, compatibleWith: nil)
         let image = UIImage(named: "plus_icon")
-        let button1 = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked)) // action:#selector(Class.MethodName) for swift 3
-        self.navigationItem.rightBarButtonItem  = button1
+         buttonRightItem = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked)) // action:#selector(Class.MethodName) for swift 3
+        self.navigationItem.rightBarButtonItem  = buttonRightItem
+ 
      
         self.perform(#selector(getData), with: nil)
        // self.getData()
         // Do any additional setup after loading the view.
+        
+  
     }
-    
+    @objc func addNewClicked() {
+        let podBundle = Bundle(for: ListViewForAllVC.self)
+        let story = UIStoryboard(name: "Main", bundle: podBundle)
+        
+        let obj = story.instantiateViewController(withIdentifier: "ListViewForAllVC") as! ListViewForAllVC
+        
+        obj.obj_lookUpType = self.obj_lookUpType
+        obj.attributArrayClone = self.attributArrayClone
+        obj.delegateUpdate = self
+        self.present(obj, animated: true, completion: nil)
+        // self.navigationController?.pushViewController(obj, animated: true)
+ 
+        
+    }
     
     func isValidate() -> Bool {
         for item in self.attributArray {
@@ -71,19 +94,6 @@ class ProfileListVC: BaseProfileVC {
         
         
         return true
-    }
-    @objc func addNewClicked() {
-        let podBundle = Bundle(for: ListViewForAllVC.self)
-        let story = UIStoryboard(name: "Main", bundle: podBundle)
-        
-        let obj = story.instantiateViewController(withIdentifier: "ListViewForAllVC") as! ListViewForAllVC
-        
-        obj.obj_lookUpType = self.obj_lookUpType
-        obj.attributArrayClone = self.attributArrayClone
-        obj.delegateUpdate = self
-        self.present(obj, animated: true, completion: nil)
-       // self.navigationController?.pushViewController(obj, animated: true)
-        
     }
     @objc func getData(){
         
@@ -134,6 +144,13 @@ class ProfileListVC: BaseProfileVC {
                             if let detail = serviceResponse.data?.DETAIL {
                                 self.detailArray = detail
                                 self.tblView.reloadData()
+             if let row = serviceResponse.data?.MULTIPLE_ROWS {
+                if row == "N" && self.detailArray.count > 0 {
+                    if self.buttonRightItem != nil {
+                    self.buttonRightItem.isEnabled = false
+                    }
+                 }
+                                }
                                 }
                         }
                         else {
@@ -262,6 +279,7 @@ class ProfileListVC: BaseProfileVC {
                                 self.tblView.reloadData()
                                 if self.detailArray.count < 1 {
                                     self.noDataFoundView.isHidden = false
+                                    self.buttonRightItem.isEnabled = true
                                 }
                                 else {
                                     self.noDataFoundView.isHidden = true
@@ -355,13 +373,102 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return detailArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 1.0
+        }
+        else {
+            return 18.0
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let obj = self.detailArray[section]
+         let arr = obj.LIST?.filter({ $0.TYPE == "F" })
+         if arr != nil && arr!.count > 0 {
+        
+                var arrProfileID = [String]()
+                for item in arr! {
+                    if arrProfileID.contains(item.PROFILE_ATTRIBUTE_ID!){
+                        
+                    }
+                    else {
+                        arrProfileID.append(item.PROFILE_ATTRIBUTE_ID!)
+                    }
+               
+                }
+            
+                 return CGFloat(arrProfileID.count * Int(heightOfFooter))
+             
+            }
+        
+        return 1.0
+    }
+    
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+         let obj = self.detailArray[section]
+        let footerView = UIView()
+
+        var imageListArray = [[ListData]]()
+        
+        if let arr = obj.LIST?.filter({ $0.TYPE == "F" }) {
+            var arrProfileID = [String]()
+            for item in arr {
+                if arrProfileID.contains(item.PROFILE_ATTRIBUTE_ID!){
+                    
+                }
+                else {
+                arrProfileID.append(item.PROFILE_ATTRIBUTE_ID!)
+                }
+            }
+            
+            for item in arrProfileID {
+                
+              let arr = arr.filter({ $0.PROFILE_ATTRIBUTE_ID == item })
+                imageListArray.append(arr)
+            }
+
+            footerView.frame = CGRect(x: 0, y: 0, width: Int(DataUtil.screenWidth), height: imageListArray.count * Int(heightOfFooter))
+              var index = 0.0
+        for item in imageListArray {
+            
+           
+            let dovView = DocumentListView()
+            
+            var frame:CGRect = dovView.frame
+            frame.origin.y = CGFloat(index * heightOfFooter)
+            dovView.frame = frame
+            dovView.frame = CGRect(x: 0, y: Int(index * heightOfFooter), width: Int(DataUtil.screenWidth), height: Int(heightOfFooter))
+     
+            for itemImg in item {
+                let imgUrl = itemImg.VALUE ?? ""
+                print("imgUrl == \(imgUrl) for section == \(section)")
+                dovView.imageArr.append(imgUrl)
+                dovView.titleDoc = itemImg.TITLE ?? ""
+               
+            }
+            
+            dovView.initializeView()
+               footerView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 240.0/255.0, alpha: 1)
+            footerView.addSubview(dovView)
+            index = index + 1
+            
+        }
+         return footerView
+        }
+        return UIView()
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileListCell") as! ProfileListCell
-            let obj = self.detailArray[indexPath.row]
+            let obj = self.detailArray[indexPath.section]
              cell.setPassportInfoData(obj)
          cell.btnthreeDots.tag = indexPath.row
          let image = UIImage(named: "threeDots")
@@ -369,6 +476,8 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
         cell.btnthreeDots.setImage(image, for: .selected)
         cell.btnthreeDots.setImage(image, for: .normal)
         cell.btnthreeDots.setImage(image, for: .highlighted)
+        
+        //bottomConstProfile
         return cell
             return cell
       
@@ -379,7 +488,9 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
         var height: CGFloat = 40 + 20
         if let list = self.detailArray[indexPath.row].LIST{
             for item in list {
+                if item.TYPE! != "F" {
                 height = height + 29
+                }
             }
             
         }
@@ -392,7 +503,9 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
 }
 
 class ProfileListCell: UITableViewCell {
+    @IBOutlet weak var bottomLineViewProfile: UIView!
     
+  //  @IBOutlet weak var bottomConstProfile: NSLayoutConstraint!
     @IBOutlet weak var sViewHeight: NSLayoutConstraint!
     @IBOutlet weak var btnthreeDots: UIButton!
     @IBOutlet weak var lbl1: UILabel!
@@ -438,6 +551,15 @@ class ProfileListCell: UITableViewCell {
         if let list = detilListInfo.LIST {
             var i = 0
         for item in list {
+            if item.TYPE! == "F" {
+              //  self.bottomConstProfile.constant = 0.0
+                self.bottomLineViewProfile.isHidden = true
+            }
+            else {
+                // self.bottomConstProfile.constant = 0.0
+                 self.bottomLineViewProfile.isHidden = false
+            }
+            if item.TYPE! != "F" {
             if i == 0 {
              
                  self.lblTitle1.text = item.TITLE ?? ""
@@ -527,6 +649,7 @@ class ProfileListCell: UITableViewCell {
                     self.lbl15.text = item.VALUE ?? ""
                 
             }
+          }
             
             i = i + 1
         }

@@ -146,6 +146,8 @@ extension HomeProfileVC: UICollectionViewDataSource,UICollectionViewDelegate,UIC
         let obj = story.instantiateViewController(withIdentifier: "ProfileListVC") as! ProfileListVC
         
         obj.obj_lookUpType = self.LookUpsTypeArr[indexPath.row]
+       // self.present(obj, animated: true, completion: nil)
+        
         self.navigationController?.pushViewController(obj, animated: true)
         
         

@@ -46,10 +46,7 @@ public class BaseDropDownView : UIView {
     }
     
     func initializeDropDown(){
-       
         dropDown.anchorView = dropDownView
-        
-      
         dropDown.direction = .any
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in

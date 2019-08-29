@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DocumentListView">
+            <connections>
+                <outlet property="collectioView_image" destination="3bH-2f-BTV" id="X2P-Fi-Ka2"/>
+                <outlet property="mainView" destination="iN0-l3-epB" id="RI1-BL-HBP"/>
+                <outlet property="title_lbl" destination="Qbd-fr-GHh" id="cs2-sI-ehn"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="102"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-2f-BTV">
+                    <rect key="frame" x="0.0" y="23" width="414" height="72"/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="2We-Sk-phU">
+                        <size key="itemSize" width="70" height="70"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="gF0-hr-LDh"/>
+                        <outlet property="delegate" destination="-1" id="Lck-ab-fsu"/>
+                    </connections>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ksr-KR-0fp">
+                    <rect key="frame" x="0.0" y="100" width="414" height="2"/>
+                    <color key="backgroundColor" red="0.53877693410000005" green="0.71090203519999995" blue="0.88150161500000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="U0g-br-R5o"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbd-fr-GHh">
+                    <rect key="frame" x="10" y="0.0" width="394" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="44V-ej-Waq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Ksr-KR-0fp" secondAttribute="bottom" id="3oH-zx-erk"/>
+                <constraint firstItem="3bH-2f-BTV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8zq-a1-YbJ"/>
+                <constraint firstAttribute="bottom" secondItem="3bH-2f-BTV" secondAttribute="bottom" constant="7" id="IDT-0e-bY1"/>
+                <constraint firstItem="Qbd-fr-GHh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Od5-ng-lXC"/>
+                <constraint firstItem="3bH-2f-BTV" firstAttribute="top" secondItem="Qbd-fr-GHh" secondAttribute="bottom" constant="5" id="RXR-6u-TsM"/>
+                <constraint firstAttribute="trailing" secondItem="Ksr-KR-0fp" secondAttribute="trailing" id="TQO-P5-auS"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="3bH-2f-BTV" secondAttribute="trailing" id="g87-Pj-Iuf"/>
+                <constraint firstItem="Ksr-KR-0fp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="imq-K5-Bcw"/>
+                <constraint firstAttribute="trailing" secondItem="Qbd-fr-GHh" secondAttribute="trailing" constant="10" id="k2j-Ac-hfF"/>
+                <constraint firstItem="Qbd-fr-GHh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="rmJ-X4-aP1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="186.95652173913044" y="6.0267857142857144"/>
+        </view>
+    </objects>
+</document>

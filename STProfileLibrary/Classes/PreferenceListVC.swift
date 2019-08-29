@@ -15,6 +15,13 @@ class PreferenceListVC: BaseProfileVC {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+       // self.automaticallyAdjustsScrollViewInsets = false
+       // self.tblView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0)
+        if #available(iOS 11.0, *) {
+            tblView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
         self.title = "Preference"
         headerViewP.setBasicHeight(height: 0)
         basicViewHeight.constant = 185

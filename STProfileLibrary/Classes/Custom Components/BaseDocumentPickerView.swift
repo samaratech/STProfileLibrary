@@ -9,30 +9,32 @@
 import Foundation
 import UIKit
 import Photos
+protocol BaseDocPickerDelegate: class {
+    
+    func UpdateDocPickerImage(view: BaseDocumentPickerView,index: Int,image: [UIImage])
+    
+}
 
 public class BaseDocumentPickerView : UIView {
-    
+    @IBOutlet weak var collectioView_image:UICollectionView!
+    var imageArr = [Any]()
+   // var imageArraa = [Any]()
+      weak var Delegate:BaseDocPickerDelegate!
     @IBOutlet var mainView: UIView!
-    @IBOutlet weak var document_titleLbl: UILabel!
+    @IBOutlet weak var title_lbl: UILabel!
     @IBOutlet weak var document_nameTF: UITextField!
     @IBOutlet weak var attachBtn: UIButton!
     
     let picker = UIImagePickerController()
-   
     var vc : UIViewController!
-    
       var uploadImage: UIImage!
-    
-    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initializeView()
     }
-    
     public func setController(vc : UIViewController){
         self.vc = vc
     }
-    
     func initializeView() {
         let podBundle = Bundle(for: BaseDocumentPickerView.self)
         let nib = UINib(nibName: "BaseDocumentPickerView", bundle: podBundle)
@@ -42,11 +44,12 @@ public class BaseDocumentPickerView : UIView {
         mainView.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
         
         let image1 = UIImage(named: "attachment")
-        
         self.attachBtn.setImage(image1, for: .selected)
         self.attachBtn.setImage(image1, for: .normal)
         self.attachBtn.setImage(image1, for: .highlighted)
+        collectioView_image.register(UINib(nibName: "collecImageCell", bundle: podBundle), forCellWithReuseIdentifier: "collecImageCell")
     }
+    
 
     @IBAction func openDocumentPicker(_ sender: Any) {
        
@@ -71,8 +74,6 @@ public class BaseDocumentPickerView : UIView {
         vc.present(actionsheet, animated: true, completion: nil)
 
     }
-    
-    
     func selectFromLibrary() {
         picker.allowsEditing = false
         picker.delegate = self
@@ -80,8 +81,6 @@ public class BaseDocumentPickerView : UIView {
         picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         vc.present(picker, animated: true, completion: nil)
     }
-
-    
     func selectFromCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             picker.allowsEditing = false
@@ -93,12 +92,9 @@ public class BaseDocumentPickerView : UIView {
            DataUtil.alertMessage("Sorry, this device has no camera", viewController: vc)
         }
     }
-    
-
-    
 }
 
-extension BaseDocumentPickerView : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension BaseDocumentPickerView : UIImagePickerControllerDelegate, UINavigationControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     
@@ -106,39 +102,80 @@ extension BaseDocumentPickerView : UIImagePickerControllerDelegate, UINavigation
             else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
-
-//        let resizedImage = self.resizeImage(image: chosenImage, targetSize: CGSize(width: 200.0, height: 200.0))
         uploadImage = chosenImage
         
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyyMMdd_HHmmss"
         document_nameTF.text = dateformatter.string(from: Date()) + ".jpg"
+        self.imageArr.append(chosenImage)
+        self.collectioView_image.reloadData()
+        var imgArr = [UIImage]()
+        for img in self.imageArr {
+            if img is UIImage {
+                imgArr.append(img as! UIImage)
+            }
+        }
+        self.Delegate.UpdateDocPickerImage(view: self, index: 0, image: imgArr)
         picker.dismiss(animated:true, completion: nil)
     }
-
-//    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-//        let size = image.size
-//
-//        let widthRatio  = targetSize.width  / size.width
-//        let heightRatio = targetSize.height / size.height
-//
-//        // Figure out what our orientation is, and use that to form the rectangle
-//        var newSize: CGSize
-//        if(widthRatio > heightRatio) {
-//            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-//        } else {
-//            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-//        }
-//
-//        // This is the rect that we've calculated out and this is what is actually used below
-//        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-//
-//        // Actually do the resizing to the rect using the ImageContext stuff
-//        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-//        image.draw(in: rect)
-//        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//
-//        return newImage!
-//    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let cellWidth = (DataUtil.screenWidth-60)/4
+        return CGSize(width: cellWidth, height: cellWidth)
+        
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return self.imageArr.count
+        
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let identifier = "collecImageCell"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! collecImageCell
+        
+        let img = self.imageArr[indexPath.row]
+         if img is UIImage {
+            cell.iconeImage.image = img as? UIImage
+        }
+        
+        cell.crossBtn.addTarget(self, action: #selector(crossBtnClicked(btn:)), for: .touchUpInside)
+        cell.crossBtn.tag = indexPath.row
+        return cell
+        
+    }
+    @objc func crossBtnClicked(btn: UIButton) {
+        
+        self.imageArr.remove(at: btn.tag)
+        self.collectioView_image.reloadData()
+        
+        var imgArr = [UIImage]()
+        for img in self.imageArr {
+            if img is UIImage {
+                imgArr.append(img as! UIImage)
+            }
+        }
+        
+        
+        self.Delegate.UpdateDocPickerImage(view: self, index: 0, image: imgArr)
+      //  self.Delegate.removeDocPickerImage(view: self, index: btn.tag)
+        if self.imageArr.count < 1 {
+            self.collectioView_image.isHidden = true
+            document_nameTF.text = ""
+            //topSpacesubmitBtn.constant = 30
+        }
+        
+    }
 }
+/*
+class collecImageCell: UICollectionViewCell{
+    @IBOutlet weak var crossBtn:UIButton!
+    @IBOutlet weak var iconeImage:UIImageView!
+    
+}
+*/
