@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileHeader" customModule="Profile" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileHeader" customModule="STProfileLibrary" customModuleProvider="target">
             <connections>
                 <outlet property="basicInfoView" destination="A3d-4p-BEC" id="qKh-gB-w8O"/>
                 <outlet property="basicViewHeight" destination="Qvg-Iq-tmS" id="Xms-O1-LZ3"/>
@@ -34,7 +34,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="395"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ou3-2J-39A" customClass="BorderView" customModule="Profile" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ou3-2J-39A" customClass="BorderView" customModule="STProfileLibrary" customModuleProvider="target">
                     <rect key="frame" x="9" y="9" width="396" height="358"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
@@ -45,7 +45,7 @@
                             <rect key="frame" x="15" y="15" width="70" height="70"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.93725490196078431" green="0.94117647058823528" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Hy5-7w-Ogu" secondAttribute="bottom" constant="15" id="2Ym-aN-Dkd"/>
                         <constraint firstItem="Hy5-7w-Ogu" firstAttribute="leading" secondItem="GbO-ni-VzP" secondAttribute="leading" constant="15" id="2mO-h9-fGx"/>
@@ -55,7 +55,7 @@
                         <constraint firstAttribute="trailing" secondItem="Hy5-7w-Ogu" secondAttribute="trailing" constant="15" id="c3C-y9-APL"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Milan Katiyar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fOB-8C-bVz">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fOB-8C-bVz">
                     <rect key="frame" x="125" y="10" width="269" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="gSk-O4-3te"/>
@@ -64,7 +64,7 @@
                     <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sr. Software Developer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNW-H0-qJ7">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNW-H0-qJ7">
                     <rect key="frame" x="125" y="36" width="269" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="VGd-uu-3XN"/>
@@ -73,7 +73,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Team" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SxG-fD-LtN">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SxG-fD-LtN">
                     <rect key="frame" x="125" y="57" width="269" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="zRK-l2-ksd"/>
@@ -95,7 +95,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Employee ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geR-zl-Qif">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geR-zl-Qif">
                             <rect key="frame" x="93" y="7" width="88" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
@@ -103,7 +103,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date of Join:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R1F-WN-fbE">
-                            <rect key="frame" x="234.5" y="7" width="74" height="21"/>
+                            <rect key="frame" x="310" y="7" width="74" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="hNY-T1-qSe"/>
                                 <constraint firstAttribute="width" constant="74" id="wZ3-az-WnB"/>
@@ -112,8 +112,8 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Employee ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WP9-uz-E7H">
-                            <rect key="frame" x="313.5" y="7" width="75.5" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WP9-uz-E7H">
+                            <rect key="frame" x="389" y="7" width="0.0" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="CdL-Vn-xGM"/>
                             </constraints>
@@ -122,7 +122,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.062745098039215685" green="0.3529411764705882" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.062745098039215685" green="0.3529411764705882" blue="0.66274509803921566" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="R1F-WN-fbE" firstAttribute="centerY" secondItem="ekJ-Q7-poC" secondAttribute="centerY" id="3Y2-pQ-chg"/>
                         <constraint firstAttribute="height" constant="35" id="Foc-q6-t2W"/>
@@ -159,7 +159,7 @@
                             <state key="selected" image="down_arrow"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.93725490196078431" green="0.94117647058823528" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.92156862745098034" green="0.92549019607843142" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="XYh-GI-6nK" firstAttribute="centerY" secondItem="Nt1-Bq-LI0" secondAttribute="centerY" id="60q-EV-pbk"/>
                         <constraint firstAttribute="height" constant="36" id="80c-VG-QJt"/>

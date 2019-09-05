@@ -19,7 +19,7 @@ s.ios.deployment_target = '10.0'
 
 s.source_files = 'STProfileLibrary/Classes/**/*'
 s.resource_bundles = {
-'STProfileLibrary' => ['STProfileLibrary/Assets/*']
+'STProfileLibrary' => ['STProfileLibrary/Assets/**/*.xcassets']
 }
 
 # s.public_header_files = 'Pod/Classes/**/*.h'
@@ -33,6 +33,7 @@ s.dependency 'MBProgressHUD'
 s.dependency 'Alamofire'
 s.dependency 'JTAppleCalendar', '~> 7.0'
 s.dependency 'SDWebImage'
+s.dependency 'OpalImagePicker'
 
 end
 

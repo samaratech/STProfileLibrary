@@ -24,6 +24,7 @@ struct ProfileLookupType:Decodable  {
     var TRAVEL_MODE_CODE: String?
     var LOOKUP_FLAG: String?
     var SYSTEM_ID: String?
+    var MODE_ICON_PATH:String?
     
 }
 public class UserBasicInfo:Decodable  {

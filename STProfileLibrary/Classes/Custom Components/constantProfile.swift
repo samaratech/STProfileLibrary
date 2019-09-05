@@ -12,8 +12,6 @@ let stripColor = UIColor(red: 16.0/255.0, green: 168.0/255.0, blue: 90.0/255.0, 
 var noDataTxt_account = "You don't have any records!!\n Please add new record."
  var basicInfoG:UserBasicInfo?
 let GOOGLE_KEY = "AIzaSyBXYsxqkEvdOJJRwBZexUslcOl7Wg3iFqI"
-// static let baseUrlProfile = "http://tessapp.tess360.com/"
- //let baseUrl_Profile = "http://tessapi.travelassist.online/"
  var baseUrl_profile = ""
  var LOCATION_ID_profile = ""
  var ORG_ID_profile = ""

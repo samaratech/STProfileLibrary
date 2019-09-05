@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="dropDownLbl" destination="9P3-0Z-4NL" id="joL-Ng-05V"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="7wc-6P-H06"/>
+                <outlet property="plusBtn" destination="NU8-iU-o0l" id="RGT-IK-2Td"/>
                 <outlet property="title_lbl" destination="bdo-So-bg0" id="glI-jz-MRv"/>
             </connections>
         </placeholder>

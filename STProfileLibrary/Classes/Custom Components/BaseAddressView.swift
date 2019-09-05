@@ -36,6 +36,7 @@ public class BaseAddressView : UIView {
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var dropDownLbl: UILabel!
     @IBOutlet weak var title_lbl: UILabel!
+     @IBOutlet weak var plusBtn : UIButton!
     let GoogleMapsAPIServerKey = GOOGLE_KEY
     lazy var placesSearchController: GooglePlacesSearchController = {
         let controller = GooglePlacesSearchController(delegate: self, apiKey: GoogleMapsAPIServerKey, placeType: .all, coordinate: kCLLocationCoordinate2DInvalid, radius: 34, strictBounds: true, searchBarPlaceholder: ""
@@ -64,6 +65,13 @@ public class BaseAddressView : UIView {
         self.addSubview(mainView)
         mainView.frame = bounds
         mainView.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
+        
+        let image1 = UIImage(named: "acount_dropdown")
+        // let image2 = UIImage(named: "up_arrow")
+        
+        self.plusBtn.setImage(image1, for: .selected)
+        self.plusBtn.setImage(image1, for: .normal)
+        self.plusBtn.setImage(image1, for: .highlighted)
         initializeAddress()
     }
     

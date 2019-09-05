@@ -22,6 +22,7 @@ class DetailListProfile:Decodable  {
     var LIST: [ListData]?
     
     
+    
 }
 class ListData:Decodable  {
     var VALUE: String?
@@ -30,7 +31,10 @@ class ListData:Decodable  {
     var PROFILE_ATTRIBUTE_ID: String?
     var LOOKUP_ID: String?
     var TYPE: String?
+    var imageUrlStr: [ImageValue]?
+    var IMAGE_VALUE:[ImageValue]?
 }
+
 
 class AttributeForm:Decodable  {
     
@@ -53,6 +57,7 @@ class AttributeForm:Decodable  {
     var LOOKUP_ID: String?
     var ADDITIONAL_ATTRIBUTES: [AddiProfileData]?
     var imageData: [Data]?
+    var imageUrlStr: [ImageValue]?
     // var imageData:[(Data , String)]?
     // array for drop down
     
@@ -81,6 +86,10 @@ class AddiProfileData:Decodable  {
     var LOOKUP_ID: String?
     var LOOKUP_CODE: String?
     var LOOKUP_MEANING: String?
+}
+class ImageValue:Decodable  {
+    var HR_PROFILE_ATTRIBUTE_ID: String?
+    var IMAGE_URL: String?
 }
 
 

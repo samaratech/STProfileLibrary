@@ -10,8 +10,6 @@ import UIKit
 import Alamofire
 
 class ServerCommunication: NSObject {
-  //  static let baseUrl = "http://tessapp.tess360.com/"
-   // static let baseUrl = "http://tessapi.travelassist.online/"
     
     
     class func getDataWithGetWithDataResponse(url: String,parameter postParam: Parameters,HeaderParams: [String: String],methodType:HTTPMethod,viewController: UIViewController,success: @escaping(DataResponse<Any>) -> Void,failure: @escaping (NSDictionary) -> Void){
@@ -109,7 +107,6 @@ class ServerCommunication: NSObject {
         let urlFinal = baseUrl_profile + url
         print("urlFinal: \(urlFinal) ")
         print("Post Parameter: \(params) ")
-       // print("Post HeaderParams: \(HeaderParams) ")
         let modifiedURLString = baseUrl_profile + url
         if params is Dictionary<String, String> {
         }

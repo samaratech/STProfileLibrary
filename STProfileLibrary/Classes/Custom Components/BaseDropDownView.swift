@@ -36,12 +36,12 @@ public class BaseDropDownView : UIView {
         self.addSubview(mainView)
         mainView.frame = bounds
         mainView.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
-        let image1 = UIImage(named: "dropdown")
-       // let image2 = UIImage(named: "up_arrow")
-        
+        let image1 = UIImage(named: "acount_dropdown")
+
         self.plusBtn.setImage(image1, for: .selected)
         self.plusBtn.setImage(image1, for: .normal)
         self.plusBtn.setImage(image1, for: .highlighted)
+ 
      initializeDropDown()
     }
     

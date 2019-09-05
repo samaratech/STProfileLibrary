@@ -82,9 +82,9 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-2f-BTV">
-                    <rect key="frame" x="10" y="89" width="394" height="90"/>
+                    <rect key="frame" x="10" y="86" width="394" height="93"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="2We-Sk-phU">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="2We-Sk-phU">
                         <size key="itemSize" width="70" height="70"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -103,7 +103,7 @@
                 <constraint firstItem="OvU-4y-2GB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="50N-W5-xi3"/>
                 <constraint firstItem="2zZ-Bi-XsS" firstAttribute="top" secondItem="OvU-4y-2GB" secondAttribute="bottom" constant="10" id="POG-ji-igg"/>
                 <constraint firstAttribute="bottom" secondItem="3bH-2f-BTV" secondAttribute="bottom" id="RLZ-df-VmW"/>
-                <constraint firstItem="3bH-2f-BTV" firstAttribute="top" secondItem="2zZ-Bi-XsS" secondAttribute="bottom" constant="8" id="Wcb-II-WA3"/>
+                <constraint firstItem="3bH-2f-BTV" firstAttribute="top" secondItem="2zZ-Bi-XsS" secondAttribute="bottom" constant="5" id="Wcb-II-WA3"/>
                 <constraint firstAttribute="trailing" secondItem="OvU-4y-2GB" secondAttribute="trailing" constant="10" id="XGN-9j-yWh"/>
                 <constraint firstItem="3bH-2f-BTV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="ahH-sT-edv"/>
                 <constraint firstItem="2zZ-Bi-XsS" firstAttribute="leading" secondItem="OvU-4y-2GB" secondAttribute="leading" id="fso-Jt-evS"/>

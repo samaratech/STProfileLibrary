@@ -22,15 +22,25 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="SCe-tt-hdX">
                         <rect key="frame" x="5" y="5" width="65" height="65"/>
                         <color key="backgroundColor" red="0.53877693410000005" green="0.71090203519999995" blue="0.88150161500000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USt-GH-uXB">
-                        <rect key="frame" x="50" y="0.0" width="25" height="25"/>
+                        <rect key="frame" x="55" y="0.0" width="20" height="20"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="25" id="Nbo-Yc-Lle"/>
-                            <constraint firstAttribute="height" constant="25" id="eqp-QV-sTJ"/>
+                            <constraint firstAttribute="width" constant="20" id="Nbo-Yc-Lle"/>
+                            <constraint firstAttribute="height" constant="20" id="eqp-QV-sTJ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                        <state key="normal" title="X">
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                     </button>

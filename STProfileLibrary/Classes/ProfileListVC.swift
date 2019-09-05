@@ -41,17 +41,24 @@ class ProfileListVC: BaseProfileVC {
         self.tblView.rowHeight = UITableView.automaticDimension;
         self.tblView.estimatedRowHeight = 200;
         let podBundle = Bundle(for: ProfileListVC.self)
-       // let image = UIImage(named: "plus_icon", in: podBundle, compatibleWith: nil)
-        let image = UIImage(named: "plus_icon")
-         buttonRightItem = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked)) // action:#selector(Class.MethodName) for swift 3
+    
+        let image = UIImage(named: "acount_plus_icon")?.withRenderingMode(.alwaysOriginal)
+       //alwaysOriginal withRenderingMode(.alwaysOriginal)
+         buttonRightItem = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked))
+        
         self.navigationItem.rightBarButtonItem  = buttonRightItem
  
      
         self.perform(#selector(getData), with: nil)
-       // self.getData()
-        // Do any additional setup after loading the view.
-        
+    
+        let imageback = UIImage(named: "acount_back_arrow")
+        let button1 = UIBarButtonItem(image:imageback, style: .plain, target: self, action: #selector(backBtnClicked))
+        // action:#selector(Class.MethodName) for swift 3
+        self.navigationItem.leftBarButtonItem  = button1
   
+    }
+    @objc func backBtnClicked(){
+        self.navigationController?.popViewController(animated: true)
     }
     @objc func addNewClicked() {
         let podBundle = Bundle(for: ListViewForAllVC.self)
@@ -97,7 +104,9 @@ class ProfileListVC: BaseProfileVC {
     }
     @objc func getData(){
         
-        
+         attributArray = [AttributeForm]()
+         attributArrayClone = [AttributeFormClone]()
+         detailArray = [DetailListProfile]()
         if let obj = obj_lookUpType {
             
             // "LOOKUP_FLAG":"X", "SYSTEM_ID":"T", "SIGNIN_TYPE":"P"
@@ -116,7 +125,7 @@ class ProfileListVC: BaseProfileVC {
                         if serviceResponse.success == true {
                         if var types = serviceResponse.data?.ATTRIBUTES {
                                 self.attributArray = types
-                            
+                self.attributArrayClone.removeAll()
             for item in self.attributArray {
                 let objClone = AttributeFormClone()
                 objClone.LOOKUP_TYPE_ID = item.LOOKUP_TYPE_ID
@@ -197,6 +206,7 @@ class ProfileListVC: BaseProfileVC {
     }
     @objc func openOptionsforCell(btn: UIButton) {
         let objDetailProfile = self.detailArray[btn.tag]
+        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
         
         alert.addAction(UIAlertAction(title:"Edit", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
@@ -207,15 +217,22 @@ class ProfileListVC: BaseProfileVC {
             let obj = story.instantiateViewController(withIdentifier: "ListViewForAllVC") as! ListViewForAllVC
                 var i = 0
             for item in self.attributArray {
-                if objDetailProfile.LIST != nil && i < objDetailProfile.LIST!.count {
+                 item.imageUrlStr = [ImageValue]()
+                 item.cellHeight = nil
+                if objDetailProfile.LIST != nil && i <= objDetailProfile.LIST!.count {
                   let arr =  objDetailProfile.LIST?.filter({ $0.PROFILE_ATTRIBUTE_ID! == item.PROFILE_ATTRIBUTE_ID! })
                     
+                    
+                   
                     if arr != nil && arr!.count > 0 {
                         item.HR_PROFILE_ATTRIBUTE_ID = arr?[0].HR_PROFILE_ATTRIBUTE_ID
                         item.PROFILE_ATTRIBUTE_DEFAULT_VALUE = arr?[0].VALUE
                         item.LOOKUP_ID = arr?[0].LOOKUP_ID
+                        item.imageUrlStr = arr?[0].IMAGE_VALUE
+                        item.imageData = [Data]()
                         
                     }
+                    
                 }
                i = i + 1
             }
@@ -309,6 +326,9 @@ class ProfileListVC: BaseProfileVC {
 }
 extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfileListData{
     func updateListData(attributArray: [AttributeForm],listId: String, isUpdate: Bool) {
+        attributArrayClone.removeAll()
+          self.perform(#selector(getData), with: nil)
+          return
         if isUpdate == true {
             //let obj = DetailListProfile()
            // obj.LIST_ID = listId
@@ -420,6 +440,7 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
         
         if let arr = obj.LIST?.filter({ $0.TYPE == "F" }) {
             var arrProfileID = [String]()
+            /*
             for item in arr {
                 if arrProfileID.contains(item.PROFILE_ATTRIBUTE_ID!){
                     
@@ -428,16 +449,19 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
                 arrProfileID.append(item.PROFILE_ATTRIBUTE_ID!)
                 }
             }
-            
+            */
+            /*
             for item in arrProfileID {
                 
               let arr = arr.filter({ $0.PROFILE_ATTRIBUTE_ID == item })
                 imageListArray.append(arr)
             }
+            */
 
             footerView.frame = CGRect(x: 0, y: 0, width: Int(DataUtil.screenWidth), height: imageListArray.count * Int(heightOfFooter))
               var index = 0.0
-        for item in imageListArray {
+        
+        for item in arr {
             
            
             let dovView = DocumentListView()
@@ -447,13 +471,15 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
             dovView.frame = frame
             dovView.frame = CGRect(x: 0, y: Int(index * heightOfFooter), width: Int(DataUtil.screenWidth), height: Int(heightOfFooter))
      
-            for itemImg in item {
-                let imgUrl = itemImg.VALUE ?? ""
-                print("imgUrl == \(imgUrl) for section == \(section)")
-                dovView.imageArr.append(imgUrl)
-                dovView.titleDoc = itemImg.TITLE ?? ""
-               
+           // for itemImg in item {
+               // let imgUrl = itemImg.VALUE ?? ""
+               // print("imgUrl == \(imgUrl) for section == \(section)")
+            if item.IMAGE_VALUE != nil && item.IMAGE_VALUE!.count > 0 {
+                dovView.imageArr = item.IMAGE_VALUE!
+                dovView.titleDoc = item.TITLE ?? ""
             }
+               
+           // }
             
             dovView.initializeView()
                footerView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 240.0/255.0, alpha: 1)
@@ -461,25 +487,25 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
             index = index + 1
             
         }
-         return footerView
+             return footerView
         }
-        return UIView()
+        
+        
+      return UIView()
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileListCell") as! ProfileListCell
             let obj = self.detailArray[indexPath.section]
              cell.setPassportInfoData(obj)
-         cell.btnthreeDots.tag = indexPath.row
-         let image = UIImage(named: "threeDots")
+         cell.btnthreeDots.tag = indexPath.section
+         let image = UIImage(named: "acount_threeDots")
         cell.btnthreeDots.addTarget(self, action: #selector(openOptionsforCell(btn:)), for: .touchUpInside)
         cell.btnthreeDots.setImage(image, for: .selected)
         cell.btnthreeDots.setImage(image, for: .normal)
         cell.btnthreeDots.setImage(image, for: .highlighted)
-        
-        //bottomConstProfile
+
         return cell
-            return cell
       
     }
     

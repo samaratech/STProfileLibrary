@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SDWebImage
 
 public class HomeProfileVC: BaseProfileVC {
     public var baseUrl_home: String?
@@ -22,6 +23,7 @@ public class HomeProfileVC: BaseProfileVC {
   
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Profile"
         if let baseUrl = baseUrl_home {
             baseUrl_profile = baseUrl
         }
@@ -46,15 +48,15 @@ public class HomeProfileVC: BaseProfileVC {
         
       //  let podBundle = Bundle(for: ProfileListVC.self)
      //   let image = UIImage(named: "plus-button", in: podBundle, compatibleWith: nil)
-        let image = UIImage(named: "back_arrow")
-        let button1 = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked))
+        let image = UIImage(named: "acount_back_arrow")
+        let button1 = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(backBtnClicked))
         // action:#selector(Class.MethodName) for swift 3
         self.navigationItem.leftBarButtonItem  = button1
         
         // Do any additional setup after loading the view.
     }
     
-    @objc func addNewClicked(){
+    @objc func backBtnClicked(){
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -172,6 +174,13 @@ extension HomeProfileVC: UICollectionViewDataSource,UICollectionViewDelegate,UIC
             
             let obj = self.LookUpsTypeArr[indexPath.row]
             cell.ttlLabel.text = obj.LOOKUP_TYPE
+        if let img =  obj.MODE_ICON_PATH  {
+            if let url = URL(string: img ) {
+                print("url in  DocumentListView ==",url)
+                cell.iconeImage.sd_setImage(with: url, placeholderImage: UIImage(named: ""), options: SDWebImageOptions(), completed: nil)
+            }
+        }
+        
             
             return cell
             

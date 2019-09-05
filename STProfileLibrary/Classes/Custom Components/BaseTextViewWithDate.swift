@@ -44,7 +44,7 @@ public class BaseTextViewWithDate : UIView {
         generic_textField.delegate = self
         sView.layer.borderColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1).cgColor
         sView.layer.borderWidth = 1
-        let image1 = UIImage(named: "calendar")
+        let image1 = UIImage(named: "acount_calendar")
         
         self.attachBtn.setImage(image1, for: .selected)
         self.attachBtn.setImage(image1, for: .normal)

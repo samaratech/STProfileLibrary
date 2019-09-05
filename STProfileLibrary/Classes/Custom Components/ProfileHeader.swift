@@ -54,8 +54,8 @@ import UIKit
         //        profImgview.layer.borderColor = .gra
         profImgview.layer.cornerRadius = profImgview.frame.size.width / 2
         profImgview.clipsToBounds = true
-        let image1 = UIImage(named: "down_arrow")
-        let image2 = UIImage(named: "up_arrow")
+        let image1 = UIImage(named: "acount_down_arrow")
+        let image2 = UIImage(named: "acount_up_arrow")
  
         self.plusBtb.setImage(image1, for: .selected)
         self.plusBtb.setImage(image2, for: .normal)

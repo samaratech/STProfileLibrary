@@ -77,6 +77,12 @@ extension DocumentListView : UICollectionViewDataSource,UICollectionViewDelegate
             cell.iconeImage.sd_setImage(with: url, placeholderImage: UIImage(named: ""), options: SDWebImageOptions(), completed: nil)
             }
         }
+        else if img is ImageValue {
+            if let url = URL(string: (img as! ImageValue).IMAGE_URL ?? "") {
+                print("url in  DocumentListView ==",url)
+                cell.iconeImage.sd_setImage(with: url, placeholderImage: UIImage(named: ""), options: SDWebImageOptions(), completed: nil)
+            }
+        }
            return cell
         
     }

@@ -10,22 +10,29 @@ import Alamofire
 class ListViewForAllVC: UIViewController {
     
 @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var crossBtn:UIButton!
     weak var delegateUpdate:updateProfileListData!
     var dataSetId: String?
     @IBOutlet weak var footrView: UIView!
+    @IBOutlet weak var submitBtn: UIButton!
     var obj_lookUpType: ProfileLookupType?
     var attributArray: [AttributeForm]!
     var attributArrayClone: [AttributeFormClone]!
    // var imageDatArr = [Data]()
     var imageDatArr = [(Data , String)]()
+     var image_deleteArr = [String]()
+    var cell_height:CGFloat = 166.0
 //    ("Gabriel", "Kirkpatrick")
     @IBOutlet weak var lblTitle: UILabel!
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      //  attributArrayClone = attributArray.copy()
+        let image1 = UIImage(named: "acount_cross_error")
+        self.crossBtn.setImage(image1, for: .selected)
+        self.crossBtn.setImage(image1, for: .normal)
+        self.crossBtn.setImage(image1, for: .highlighted)
+//      //  attributArrayClone = attributArray.copy()
  
         self.perform(#selector(setData), with: nil)
     }
@@ -33,6 +40,9 @@ class ListViewForAllVC: UIViewController {
         
         
         if dataSetId == nil {
+            self.submitBtn.setTitle("SAVE", for: .normal)
+            self.submitBtn.setTitle("SAVE", for: .selected)
+            self.submitBtn.setTitle("SAVE", for: .highlighted)
             attributArray = [AttributeForm]()
             for item in self.attributArrayClone {
                 let objClone = AttributeForm()
@@ -58,6 +68,9 @@ class ListViewForAllVC: UIViewController {
             }
         }
         else {
+            self.submitBtn.setTitle("UPDATE", for: .normal)
+            self.submitBtn.setTitle("UPDATE", for: .selected)
+            self.submitBtn.setTitle("UPDATE", for: .highlighted)
             for item in self.attributArray {
             }
         }
@@ -130,6 +143,7 @@ class ListViewForAllVC: UIViewController {
                     params["PROFILE_ATTRIBUTE_ID"] = item.PROFILE_ATTRIBUTE_ID ?? ""
                     params["PROFILE_ATTRIBUTE_TYPE"] = item.PROFILE_ATTRIBUTE_TYPE ?? ""
                     if item.PROFILE_ATTRIBUTE_TYPE != nil && item.PROFILE_ATTRIBUTE_TYPE! == "F" {
+                        
                         if item.imageData != nil && item.imageData!.count > 0{
                          
                             for img in item.imageData! {
@@ -155,16 +169,18 @@ class ListViewForAllVC: UIViewController {
                     array.append(params)
                     
                 }
-                 var params2:Parameters = [String:Any]()
-                var paramsimg:Parameters = [String:Any]()
-                paramsimg["ATTRIBUTES"] = array
-                params2["ATTRIBUTES"] = paramsimg
-                //params2["ATTRIBUTES"] = array
-                params2["LOOKUP_TYPE_ID"] = lookId
-                params2["DATASET_ID"] = dataSetId ?? ""
-                let postParamHeaders = [String: String]()
-                
-                if imageDatArr.count > 0 {
+                    var params2:Parameters = [String:Any]()
+                    var paramsimg:Parameters = [String:Any]()
+                    paramsimg["ATTRIBUTES"] = array
+                    params2["ATTRIBUTES"] = paramsimg
+                    //params2["ATTRIBUTES"] = array
+                    params2["LOOKUP_TYPE_ID"] = lookId
+                    params2["DATASET_ID"] = dataSetId ?? ""
+                    if self.image_deleteArr.count > 0 {
+                        let joined = self.image_deleteArr.joined(separator: ",")
+                        params2["IMAGE_ID"] = joined
+                    }
+                    let postParamHeaders = [String: String]()
                     
             ServerCommunication.postPictureAuthorizationHandler(url: "profileImageDataAddUpdate", postParam: params2, imageArr: imageDatArr, viewController: self, success: { (successResponseData) in
                         if successResponseData.data != nil {
@@ -190,7 +206,7 @@ class ListViewForAllVC: UIViewController {
                                                 self.delegateUpdate.updateListData(attributArray: self.attributArray ,listId: setId,isUpdate: false)
                                                 
                                             }
-                                          //  self.dismiss(animated: true, completion: nil)
+                                            self.dismiss(animated: true, completion: nil)
                                             
                                             
                                             
@@ -217,9 +233,24 @@ class ListViewForAllVC: UIViewController {
                         
                     })
                     return
-                }
- 
                 
+                
+              
+                
+               /*
+                 
+                 var params2:Parameters = [String:Any]()
+                 params2["ATTRIBUTES"] = array
+                 params2["LOOKUP_TYPE_ID"] = lookId
+                 
+                 params2["DATASET_ID"] = dataSetId ?? ""
+                 if self.image_deleteArr.count > 0 {
+                 let joined = self.image_deleteArr.joined(separator: ",")
+                 params2["IMAGE_ID"] = joined
+                 }
+                 
+                 let postParamHeaders = [String: String]()
+                 
         ServerCommunication.getDataWithGetWithDataResponse(url: "profileDataAddUpdate", parameter: params2, HeaderParams: postParamHeaders, methodType: .post, viewController: self, success: { (successResponseData) in
                 if successResponseData.data != nil {
                         if let json = successResponseData.result.value as? NSDictionary {
@@ -272,6 +303,7 @@ class ListViewForAllVC: UIViewController {
                         DataUtil.alertMessage(msg as! String, viewController: self)
                     }
                 }
+                */
             }
         }
         
@@ -362,29 +394,50 @@ class ListViewForAllVC: UIViewController {
  }
 }
 extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextViewDelegate,BaseDateViewDelegate,BasePeriodDateDelegate,BaseDropDownDelegate, BaseAddressDelegate,BaseDocPickerDelegate{
-    func removeDocPickerImage(view: BaseDocumentPickerView, index: Int) {
-        if index == 0 {
-           // let obj = attributArray[view.tag]
-           // obj.cellHeight = 150.0
-            
+    func RemoveDocPickerImage(view: BaseDocumentPickerView, index: Int, image: [Any], type: ImageValue) {
+        let obj = attributArray[view.tag]
+       image_deleteArr.append(type.HR_PROFILE_ATTRIBUTE_ID ?? "")
+        if image.count < 1 {
+            obj.cellHeight = nil
+            obj.imageUrlStr?.removeAll()
         }
+        else {
+            obj.cellHeight = cell_height
+        }
+        
+            if obj.imageUrlStr != nil &&  obj.imageUrlStr!.count >= index + 1 {
+                
+                
+                obj.imageUrlStr?.remove(at: index)
+               
+            }
+        
     }
-    func UpdateDocPickerImage(view: BaseDocumentPickerView, index: Int, image: [UIImage]) {
+
+    func UpdateDocPickerImage(view: BaseDocumentPickerView, index: Int, image: [Any]) {
         
         let obj = attributArray[view.tag]
         obj.imageData = [Data]()
         if image.count < 1 {
-            obj.cellHeight = 85.0
+            obj.cellHeight = nil
+            obj.imageUrlStr?.removeAll()
         }
         else {
-         obj.cellHeight = 150.0
+         obj.cellHeight = cell_height
         }
         for img in image {
-            obj.imageData?.append(img.jpegData(compressionQuality: 0.75)!)
+            if img is UIImage {
+                obj.imageData?.append((img as! UIImage).jpegData(compressionQuality: 0.75)!)
+            }
+
+                
+            
            // imageDatArr.append((img.jpegData(compressionQuality: 0.75)!, obj.PROFILE_ATTRIBUTE_ID ?? ""))
         }
-      //  imageDatArr = obj.imageData!
+      
          obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE = view.document_nameTF.text
+      //  obj.imageUrlStr?.append(view.document_nameTF.text!)
+      
         self.tblView.reloadData()
     }
     func UpdateAddressText(view: BaseAddressView, index: Int, text: String) {
@@ -544,7 +597,25 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
                 for item in addiList {
                     nameArray.append(item.LOOKUP_MEANING!)
                 }
-   
+                obj.cellHeight = nil
+                cell.doc_view.imageArr = [Any]()
+                if obj.imageUrlStr != nil && obj.imageUrlStr!.count > 0 {
+                    for imgItem in obj.imageUrlStr! {
+                    cell.doc_view.imageArr.append(imgItem)
+                    
+                    }
+                    obj.cellHeight = cell_height
+                }
+                 if obj.imageData != nil && obj.imageData!.count > 0 {
+                    for imgItem in obj.imageData! {
+                        if let image = UIImage.sd_image(with: imgItem) {
+                        cell.doc_view.imageArr.append(image)
+                        }
+                        
+                    }
+                     obj.cellHeight = cell_height
+                }
+              
                 
                // cell.doc_view.dropDownLbl.text = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE ?? ""
                 
