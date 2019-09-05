@@ -23,7 +23,7 @@ class SelectCountryViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-         self.countries = CountryPicker.countryNamesByCode()
+      //   self.countries = CountryPicker.countryNamesByCode()
     }
     @IBAction func backBtnClicked(){
         self.dismiss(animated: true) {
