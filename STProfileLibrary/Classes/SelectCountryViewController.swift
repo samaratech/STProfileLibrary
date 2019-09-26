@@ -13,7 +13,7 @@ class SelectCountryViewController: UIViewController {
     weak var DelegateSelect: UpdateCountryList!
     @IBOutlet weak var tvCountries: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+     @IBOutlet weak var backBtn: UIButton!
     var countries: [Country] = [Country]()
     var filteredCountries: [Country] = [Country]()
     
@@ -21,9 +21,13 @@ class SelectCountryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let image1 = UIImage(named: "acount_back_arrow")
+        self.backBtn.setImage(image1, for: .selected)
+        self.backBtn.setImage(image1, for: .normal)
+        self.backBtn.setImage(image1, for: .highlighted)
 
         // Do any additional setup after loading the view.
-      //   self.countries = CountryPicker.countryNamesByCode()
+         self.countries = CountryPicker.countryNamesByCode()
     }
     @IBAction func backBtnClicked(){
         self.dismiss(animated: true) {

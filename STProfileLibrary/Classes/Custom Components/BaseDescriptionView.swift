@@ -11,7 +11,7 @@ import UIKit
 
 public class BaseDescriptionView: UIView {
    
-    
+     @IBOutlet weak var sView: UIView!
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var desription_detailLbl: UILabel!
     @IBOutlet weak var desription_detailTextView: UITextView!

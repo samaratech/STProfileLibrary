@@ -16,7 +16,10 @@ public class HomeProfileVC: BaseProfileVC {
     public var ORG_ID_home: String?
     public var SIGNIN_TYPE_home: String?
     public var TOKEN_home: String?
-    
+    public var allowCashAdvance_home: String?
+    public var ALLOW_EXPENSES_home: String?
+    public var ALLOW_NT_EXPENSES_home: String?
+    public var googleKey: String?
 @IBOutlet weak var profileCollectioView:UICollectionView!
     var LookUpsTypeArr = [ProfileLookupType]()
 
@@ -38,6 +41,18 @@ public class HomeProfileVC: BaseProfileVC {
         }
         if let TOKEN = TOKEN_home {
             TOKEN_profile = TOKEN
+        }
+        if let key = googleKey{
+            GOOGLE_KEY = key
+        }
+        if let allowCashAdvance = allowCashAdvance_home {
+            allowCashAdvance_profile = allowCashAdvance
+        }
+        if let ALLOW_EXPENSES = ALLOW_EXPENSES_home {
+            ALLOW_EXPENSES_profile = ALLOW_EXPENSES
+        }
+        if let ALLOW_NT_EXPENSES = ALLOW_NT_EXPENSES_home {
+            ALLOW_NT_EXPENSES_profile = ALLOW_NT_EXPENSES
         }
         
           //baseUrl_Profile = ""
@@ -80,15 +95,16 @@ public class HomeProfileVC: BaseProfileVC {
                             self.LookUpsTypeArr = types
                             
                         }
+                
+                        
+                        
+                        self.profileCollectioView.reloadData()
                         if let userInfo = serviceResponse.data?.USER_INFO {
                             basicInfoG = userInfo
                             self.headerViewP.basicInfo = userInfo
                             self.headerViewP.setValues(userData: userInfo)
                             
                         }
-                        
-                        
-                        self.profileCollectioView.reloadData()
                         
                     }
                     else {
@@ -142,15 +158,46 @@ extension HomeProfileVC: UICollectionViewDataSource,UICollectionViewDelegate,UIC
         // MARK: collectionView Delegate
         
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let obj_lookUp = self.LookUpsTypeArr[indexPath.row]
+        if let looupUpId = obj_lookUp.LOOKUP_TYPE_ID {
+            if looupUpId == "125" {
+            let podBundle = Bundle(for: VacationListVC.self)
+            let story = UIStoryboard(name: "Main", bundle: podBundle)
+            let obj = story.instantiateViewController(withIdentifier: "VacationListVC") as! VacationListVC
+                obj.titleStr = obj_lookUp.LOOKUP_TYPE
+            self.navigationController?.pushViewController(obj, animated: true)
+                
+                return
+            }
+            else if looupUpId == "126" {
+                let podBundle = Bundle(for: DelegateListVC.self)
+                let story = UIStoryboard(name: "Main", bundle: podBundle)
+                let obj = story.instantiateViewController(withIdentifier: "DelegateListVC") as! DelegateListVC
+                obj.titleStr = obj_lookUp.LOOKUP_TYPE
+            self.navigationController?.pushViewController(obj, animated: true)
+                return
+                
+            }
+            else if looupUpId == "127" {
+                let podBundle = Bundle(for: PreferenceListVC.self)
+                let story = UIStoryboard(name: "Main", bundle: podBundle)
+                let obj = story.instantiateViewController(withIdentifier: "PreferenceListVC") as! PreferenceListVC
+                obj.titleStr = obj_lookUp.LOOKUP_TYPE
+                self.navigationController?.pushViewController(obj, animated: true)
+                return
+                
+            }
+        }
+   
         let podBundle = Bundle(for: ProfileListVC.self)
         let story = UIStoryboard(name: "Main", bundle: podBundle)
         
         let obj = story.instantiateViewController(withIdentifier: "ProfileListVC") as! ProfileListVC
-        
-        obj.obj_lookUpType = self.LookUpsTypeArr[indexPath.row]
-       // self.present(obj, animated: true, completion: nil)
-        
+       
+        obj.obj_lookUpType = obj_lookUp
+       
         self.navigationController?.pushViewController(obj, animated: true)
+        
         
         
     }

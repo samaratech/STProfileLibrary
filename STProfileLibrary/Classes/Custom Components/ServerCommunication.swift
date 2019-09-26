@@ -21,25 +21,25 @@ class ServerCommunication: NSObject {
         let urlFinal = baseUrl_profile + url
         print("urlFinal: \(urlFinal) ")
         print("Post Parameter: \(param) ")
-        print("Post HeaderParams: \(HeaderParams) ")
+//        print("Post HeaderParams: \(HeaderParams) ")
         DataUtil.ShowIndictorView(IndicatoreTitle: "")
         
         Alamofire.request(urlFinal, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
             if let data = response.data{
-                print("******************Json Data Start************************************")
+               // print("******************Json Data Start************************************")
                 if let strJson = NSString(data: data, encoding: String.Encoding.utf8.rawValue){
                     print(strJson)
                     
                     
                 }
-                print("******************Json Data End ************************************")
+              //  print("******************Json Data End ************************************")
             }
             switch (response.result){
             case .success(_):
-                print("******************success******************")
+              //  print("******************success******************")
                 guard let json = response.result.value as? NSDictionary else
                 {
-                    print("Error: \(String(describing: response.result.error))")
+                  //  print("Error: \(String(describing: response.result.error))")
                     DataUtil.HideIndictorView()
                     DispatchQueue.main.async {
                         failure(response.result as Any as! NSDictionary )
@@ -84,7 +84,7 @@ class ServerCommunication: NSObject {
                         DispatchQueue.main.async {
                             let dictFail = NSMutableDictionary()
                             dictFail.setValue(-1009, forKey: "errorCode")
-                            print("dictFail ==",dictFail) ;
+                         //   print("dictFail ==",dictFail) ;
                             
                             failure(dictFail)
                         }
@@ -119,13 +119,9 @@ class ServerCommunication: NSObject {
                 multipartFormData.append(imageData.0, withName: keyy, fileName: file_name, mimeType: "image/jpeg")
                 index = index + 1
             }
-            
-         
-            //   multipartFormData.append(jsonData)
- 
             for (key, value) in params {
-                print("value ==",value)
-                 print("key == ",key)
+              //  print("value ==",value)
+               //  print("key == ",key)
                 if value is String{
                  //   print("value == ",value)
                     
@@ -139,14 +135,6 @@ class ServerCommunication: NSObject {
                     let stringsData = NSMutableData()
                     let jsonData = try? JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions())
                     let jsonString = NSString(data: jsonData!, encoding: String.Encoding.utf8.rawValue)
-                    
-                    /*
-                    for tag in tagsArray{
-                        if let stringData = jsonString?.data(using: String.Encoding.utf8.rawValue) {
-                            stringsData.append(stringData)
-                        }
-                    }
-                    */
                     if let stringData = jsonString?.data(using: String.Encoding.utf8.rawValue) {
                         stringsData.append(stringData)
                     }
@@ -154,28 +142,6 @@ class ServerCommunication: NSObject {
                     multipartFormData.append(stringsData as Data, withName: key)
                 }
             }
-            
-            
-            /*
-            for (key, value) in params {
-                if let tagsArray = value as? [String]{
-                    
-                    let stringsData = NSMutableData()
-                    for tag in tagsArray{
-                        if let stringData = tag.data(using: String.Encoding.utf8) {
-                            stringsData.append(stringData)
-                        }
-                    }
-                    
-                    multipartFormData.append(stringsData as Data, withName: key)
-                }
-                else if value is String{
-                    
-                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
-                    
-                }
-            }
-            */
         }, to:modifiedURLString)
         {
             (result) in
@@ -201,7 +167,6 @@ class ServerCommunication: NSObject {
                             DispatchQueue.main.async {
                     print("response ==",response); DataUtil.alertMessage(response.result.error!.localizedDescription, viewController: viewController)
                                 print(response.result.error!.localizedDescription)
-                               // alertMessase(withTitle: nil, message: response.result.error!.localizedDescription, okAction: {})
                             }
                             break
                             
@@ -212,9 +177,6 @@ class ServerCommunication: NSObject {
                             success(response)
                              DataUtil.HideIndictorView()
                         }
-                        
-                        
-                        
                 }
                 break
                 
@@ -227,10 +189,80 @@ class ServerCommunication: NSObject {
                 } else {
                     
                 }
+            }
+            
+        }
+        
+        
+        
+        
+    }
+    class func postProfilePictureHandler(url: String, postParam:Parameters,imgData:Data,viewController: UIViewController,success:@escaping(DataResponse<Any>) -> Void,failure:@escaping (NSDictionary)->() ) {
+        DataUtil.ShowIndictorView(IndicatoreTitle: "")
+        var params = postParam
+        params["LOCATION_ID"] = LOCATION_ID_profile
+        params["ORG_ID"] = ORG_ID_profile
+        params["SIGNIN_TYPE"] = SIGNIN_TYPE_profile
+        params["TOKEN"] = TOKEN_profile
+        let urlFinal = baseUrl_profile + url
+        print("urlFinal: \(urlFinal) ")
+        print("Post Parameter: \(params) ")
+        let modifiedURLString = baseUrl_profile + url
+        if params is Dictionary<String, String> {
+        }
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(imgData, withName: "PROFILE_IMAGE",fileName: "file.jpg", mimeType: "image/jpg")
+            for (key, value) in params {
+                multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
+            }
+            
+        }, to:modifiedURLString)
+        {
+            (result) in
+            switch result
+            {
+            case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (progress) in
+                    //Print progress
+                })
+                
+                upload.responseJSON
+                    {
+                        response in
+                        
+                        switch response.result{
+                        case .success( let value) :
+                            
+                            success(response)
+                            break
+                            
+                        case .failure( let error) :
+                            DataUtil.HideIndictorView()
+                            DispatchQueue.main.async {
+                                print("response ==",response); DataUtil.alertMessage(response.result.error!.localizedDescription, viewController: viewController)
+                                print(response.result.error!.localizedDescription)
+                            }
+                            break
+                            
+                        }
+                        if let data = response.result.value{
+                            print(response.result.value)
+                            
+                            success(response)
+                            DataUtil.HideIndictorView()
+                        }
+                }
+                break
                 
                 
+            case .failure(let encodingError):
                 
+                DataUtil.HideIndictorView()
                 
+                if let err = encodingError as? URLError, err.code == .notConnectedToInternet {
+                } else {
+                    
+                }
             }
             
         }

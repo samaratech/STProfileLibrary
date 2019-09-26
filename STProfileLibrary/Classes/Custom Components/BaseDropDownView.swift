@@ -12,7 +12,7 @@ import DropDown
 // weak var Delegate:BaseTextViewDelegate!
 protocol BaseDropDownDelegate: class {
     
-    func UpdateDropDownText(view: BaseDropDownView,index: Int,text: String)
+    func UpdateDropDownText(view: BaseDropDownView,index: Int,text: String,title: String)
 }
 
 public class BaseDropDownView : UIView {
@@ -22,6 +22,7 @@ public class BaseDropDownView : UIView {
     @IBOutlet weak var dropDownLbl: UILabel!
     @IBOutlet weak var title_lbl: UILabel!
     @IBOutlet weak var plusBtn : UIButton!
+     @IBOutlet weak var sView: UIView!
    let dropDown = DropDown()
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -52,7 +53,8 @@ public class BaseDropDownView : UIView {
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             self.dropDownLbl.text = item
-            self.Delegate.UpdateDropDownText(view: self,index:index, text: item)
+            self.Delegate.UpdateDropDownText(view: self, index: index, text: item, title: self.title_lbl.text ?? "")
+           // self.Delegate.UpdateDropDownText(view: self,index:index, text: item)
         }
        
     }

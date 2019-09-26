@@ -394,6 +394,8 @@ class ListViewForAllVC: UIViewController {
  }
 }
 extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextViewDelegate,BaseDateViewDelegate,BasePeriodDateDelegate,BaseDropDownDelegate, BaseAddressDelegate,BaseDocPickerDelegate{
+ 
+    
     func RemoveDocPickerImage(view: BaseDocumentPickerView, index: Int, image: [Any], type: ImageValue) {
         let obj = attributArray[view.tag]
        image_deleteArr.append(type.HR_PROFILE_ATTRIBUTE_ID ?? "")
@@ -448,7 +450,7 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         
     }
     
-    func UpdateDropDownText(view: BaseDropDownView,index:Int, text: String) {
+     func UpdateDropDownText(view: BaseDropDownView, index: Int, text: String, title: String) {
          print("selected dropdown == \(view.tag)value and value",text)
         let obj = attributArray[view.tag]
         if let obj_additional = obj.ADDITIONAL_ATTRIBUTES?[index] {
@@ -462,9 +464,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
     func UpdatePeriodDateText(view: PeriodDatesView, text: String, IndexDate: Int) {
         print("selected Date ==",text)
     }
-    
+    /*
     func UpdateDateBaseText(view: BaseTextViewWithDate, text: String) {
         
+     
+    }
+    */
+    func UpdateDateBaseText(view: BaseTextViewWithDate, text: String, select_date: Date) {
         var obj = attributArray[view.tag]
         obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE = text
         print("selected Date ==",text)
@@ -491,6 +497,14 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         if obj.PROFILE_ATTRIBUTE_TYPE! == "A" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as! TextFieldCell
             cell.BaseTFView.Delegate = self
+           
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                 cell.BaseTFView.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                 cell.BaseTFView.sView.backgroundColor = .white
+            }
             cell.BaseTFView.tag = indexPath.row
             cell.BaseTFView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
             if let txt = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE {
@@ -504,6 +518,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         if obj.PROFILE_ATTRIBUTE_TYPE! == "N" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as! TextFieldCell
             cell.BaseTFView.Delegate = self
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                cell.BaseTFView.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                cell.BaseTFView.sView.backgroundColor = .white
+            }
             cell.BaseTFView.tag = indexPath.row
             cell.BaseTFView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
             
@@ -521,6 +542,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
             var geoLabel  = "0"
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddressGeoCell") as! AddressGeoCell
             cell.addressView.Delegate = self
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                cell.addressView.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                cell.addressView.sView.backgroundColor = .white
+            }
             cell.addressView.tag = indexPath.row
             cell.addressView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
             cell.addressView.dropDownLbl.text = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE ?? ""
@@ -537,6 +565,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         else if obj.PROFILE_ATTRIBUTE_TYPE! == "L"{
             let cell = tableView.dequeueReusableCell(withIdentifier: "DropDownCell") as! DropDownCell
             cell.dropDownBView.Delegate = self
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                cell.dropDownBView.dropDownView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                cell.dropDownBView.dropDownView.backgroundColor = .white
+            }
             cell.dropDownBView.tag = indexPath.row
             
             cell.dropDownBView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
@@ -556,6 +591,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         else if obj.PROFILE_ATTRIBUTE_TYPE! == "D"{
             let cell = tableView.dequeueReusableCell(withIdentifier: "DateTextFieldCell") as! DateTextFieldCell
             cell.View_date.Delegate = self
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                cell.View_date.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                cell.View_date.sView.backgroundColor = .white
+            }
             cell.View_date.tag = indexPath.row
             cell.View_date.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
             if let txt = obj.PROFILE_ATTRIBUTE_DEFAULT_VALUE {
@@ -570,6 +612,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         else if obj.PROFILE_ATTRIBUTE_TYPE! == "L"{
             let cell = tableView.dequeueReusableCell(withIdentifier: "DropDownCell") as! DropDownCell
             cell.dropDownBView.Delegate = self
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                cell.dropDownBView.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                cell.dropDownBView.sView.backgroundColor = .white
+            }
             cell.dropDownBView.tag = indexPath.row
             
             cell.dropDownBView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
@@ -589,6 +638,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
             let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentAttachCell") as! DocumentAttachCell
             cell.doc_view.setController(vc: self)
             cell.doc_view.Delegate = self
+            if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+                
+                cell.doc_view.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+            }
+            else {
+                cell.doc_view.sView.backgroundColor = .white
+            }
             cell.doc_view.tag = indexPath.row
             
             cell.doc_view.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
@@ -626,6 +682,13 @@ extension ListViewForAllVC: UITableViewDataSource, UITableViewDelegate,BaseTextV
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as! TextFieldCell
         cell.BaseTFView.Delegate = self
         cell.BaseTFView.tag = indexPath.row
+        if (obj.PROFILE_ATTRIBUTE_REQUIRED != nil) && obj.PROFILE_ATTRIBUTE_REQUIRED! == "Y" {
+            
+            cell.BaseTFView.sView.backgroundColor = UIColor(red: 227.0/255.0, green: 254.0/255.0, blue: 233.0/255.0, alpha: 1)
+        }
+        else {
+            cell.BaseTFView.sView.backgroundColor = .white
+        }
         cell.BaseTFView.title_lbl.text = obj.PROFILE_ATTRIBUTE_DESCRIPTION!
         return cell
     }

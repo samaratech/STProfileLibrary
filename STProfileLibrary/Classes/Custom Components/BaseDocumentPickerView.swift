@@ -28,7 +28,7 @@ public class BaseDocumentPickerView : UIView {
     @IBOutlet weak var title_lbl: UILabel!
     @IBOutlet weak var document_nameTF: UITextField!
     @IBOutlet weak var attachBtn: UIButton!
-    
+     @IBOutlet weak var sView: UIView!
     let picker = UIImagePickerController()
     var vc : UIViewController!
       var uploadImage: UIImage!

@@ -20,6 +20,9 @@ class ProfileListVC: BaseProfileVC {
     var heightOfFooter = 100.0
     override func viewDidLoad() {
         super.viewDidLoad()
+        tblView.rowHeight = UITableView.automaticDimension
+        tblView.estimatedRowHeight = 300
+        
         if #available(iOS 11.0, *) {
             tblView.contentInsetAdjustmentBehavior = .never
         } else {
@@ -34,9 +37,12 @@ class ProfileListVC: BaseProfileVC {
         for _ in 0...62 {
             arrValueArray.append("")
         }
-        headerViewP.setBasicHeight(height: 0)
-        basicViewHeight.constant = 185
-        headerViewP.plusBtb.isSelected = true
+         DispatchQueue.main.async {
+        self.headerViewP.setBasicHeight(height: 0)
+        self.basicViewHeight.constant = 185
+        self.headerViewP.plusBtb.isSelected = true
+        }
+        
         tblView.isHidden = true
         self.tblView.rowHeight = UITableView.automaticDimension;
         self.tblView.estimatedRowHeight = 200;
@@ -46,7 +52,7 @@ class ProfileListVC: BaseProfileVC {
        //alwaysOriginal withRenderingMode(.alwaysOriginal)
          buttonRightItem = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked))
         
-        self.navigationItem.rightBarButtonItem  = buttonRightItem
+    //    self.navigationItem.rightBarButtonItem  = buttonRightItem
  
      
         self.perform(#selector(getData), with: nil)
@@ -157,11 +163,22 @@ class ProfileListVC: BaseProfileVC {
                 if row == "N" && self.detailArray.count > 0 {
                     if self.buttonRightItem != nil {
                     self.buttonRightItem.isEnabled = false
+                    self.navigationItem.rightBarButtonItem = nil
+                        
                     }
                  }
-                                }
-                                }
-                        }
+                else {
+                    self.buttonRightItem.isEnabled = true
+                    self.navigationItem.rightBarButtonItem = self.buttonRightItem
+                }
+                }
+             else {
+                self.buttonRightItem.isEnabled = true
+                 self.navigationItem.rightBarButtonItem = self.buttonRightItem
+                }
+                                
+                }
+               }
                         else {
                             
                             
@@ -297,6 +314,7 @@ class ProfileListVC: BaseProfileVC {
                                 if self.detailArray.count < 1 {
                                     self.noDataFoundView.isHidden = false
                                     self.buttonRightItem.isEnabled = true
+                            self.navigationItem.rightBarButtonItem = self.buttonRightItem
                                 }
                                 else {
                                     self.noDataFoundView.isHidden = true
@@ -401,6 +419,7 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
         return 1
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
         if section == 0 {
             return 1.0
         }
@@ -462,24 +481,17 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
               var index = 0.0
         
         for item in arr {
-            
-           
             let dovView = DocumentListView()
-            
             var frame:CGRect = dovView.frame
             frame.origin.y = CGFloat(index * heightOfFooter)
             dovView.frame = frame
             dovView.frame = CGRect(x: 0, y: Int(index * heightOfFooter), width: Int(DataUtil.screenWidth), height: Int(heightOfFooter))
-     
-           // for itemImg in item {
-               // let imgUrl = itemImg.VALUE ?? ""
-               // print("imgUrl == \(imgUrl) for section == \(section)")
             if item.IMAGE_VALUE != nil && item.IMAGE_VALUE!.count > 0 {
                 dovView.imageArr = item.IMAGE_VALUE!
                 dovView.titleDoc = item.TITLE ?? ""
             }
                
-           // }
+
             
             dovView.initializeView()
                footerView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 240.0/255.0, alpha: 1)
@@ -509,13 +521,17 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
       
     }
     
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         var height: CGFloat = 40 + 20
-        if let list = self.detailArray[indexPath.row].LIST{
+        if let list = self.detailArray[indexPath.section].LIST{
             for item in list {
                 if item.TYPE! != "F" {
                 height = height + 29
+                }
+                else {
+                    
                 }
             }
             
@@ -528,12 +544,14 @@ extension ProfileListVC: UITableViewDataSource, UITableViewDelegate,updateProfil
  
 }
 
+
 class ProfileListCell: UITableViewCell {
     @IBOutlet weak var bottomLineViewProfile: UIView!
     
   //  @IBOutlet weak var bottomConstProfile: NSLayoutConstraint!
     @IBOutlet weak var sViewHeight: NSLayoutConstraint!
     @IBOutlet weak var btnthreeDots: UIButton!
+  //  @IBOutlet weak var lblTitleValue: UILabel!
     @IBOutlet weak var lbl1: UILabel!
     @IBOutlet weak var lbl2: UILabel!
     @IBOutlet weak var lbl3: UILabel!
@@ -566,6 +584,23 @@ class ProfileListCell: UITableViewCell {
     @IBOutlet weak var lblTitle14: UILabel!
     @IBOutlet weak var lblTitle15: UILabel!
     
+    
+    @IBOutlet weak var lblConst1: NSLayoutConstraint!
+    @IBOutlet weak var lblConst2: NSLayoutConstraint!
+    @IBOutlet weak var lblConst3: NSLayoutConstraint!
+    @IBOutlet weak var lblConst4: NSLayoutConstraint!
+    @IBOutlet weak var lblConst5: NSLayoutConstraint!
+    @IBOutlet weak var lblConst6: NSLayoutConstraint!
+    @IBOutlet weak var lblConst7: NSLayoutConstraint!
+    @IBOutlet weak var lblConst8: NSLayoutConstraint!
+    @IBOutlet weak var lblConst9: NSLayoutConstraint!
+    @IBOutlet weak var lblConst10: NSLayoutConstraint!
+    @IBOutlet weak var lblConst11: NSLayoutConstraint!
+    @IBOutlet weak var lblConst12: NSLayoutConstraint!
+    @IBOutlet weak var lblConst13: NSLayoutConstraint!
+    @IBOutlet weak var lblConst14: NSLayoutConstraint!
+    @IBOutlet weak var lblConst15: NSLayoutConstraint!
+    
   //  var passportInfoList:PassportList?
     
     override func awakeFromNib() {
@@ -575,17 +610,75 @@ class ProfileListCell: UITableViewCell {
     func setPassportInfoData(_ detilListInfo: DetailListProfile) {
         
         if let list = detilListInfo.LIST {
+            
+            self.lblTitle1.text = ""
+            self.lbl1.text = ""
+            self.lblTitle2.text = ""
+            self.lbl2.text = ""
+            self.lblTitle3.text = ""
+            self.lbl3.text = ""
+            self.lblTitle4.text = ""
+            self.lbl4.text = ""
+            self.lblTitle5.text = ""
+            self.lbl5.text = ""
+            self.lblTitle6.text = ""
+            self.lbl6.text = ""
+            self.lblTitle7.text = ""
+            self.lbl7.text = ""
+            self.lblTitle8.text = ""
+            self.lbl8.text = ""
+            self.lblTitle9.text = ""
+            self.lbl9.text = ""
+            self.lblTitle10.text = ""
+            self.lbl10.text = ""
+            self.lblTitle11.text = ""
+            self.lbl11.text = ""
+            self.lblTitle12.text = ""
+            self.lbl12.text = ""
+            self.lblTitle13.text = ""
+            self.lbl13.text = ""
+            self.lblTitle14.text = ""
+            self.lbl14.text = ""
+            self.lblTitle15.text = ""
+            self.lbl15.text = ""
+            
             var i = 0
+            let finalText = NSMutableAttributedString()
+          
+            let myAttributeBold = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12) ]
+            let myAttributeNormal = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12) ]
+          
         for item in list {
             if item.TYPE! == "F" {
               //  self.bottomConstProfile.constant = 0.0
-                self.bottomLineViewProfile.isHidden = true
+               self.bottomLineViewProfile.isHidden = true
             }
             else {
                 // self.bottomConstProfile.constant = 0.0
-                 self.bottomLineViewProfile.isHidden = false
+                self.bottomLineViewProfile.isHidden = false
             }
             if item.TYPE! != "F" {
+                /*
+
+                 var titleText = ""
+                if i == 0 {
+                     titleText = item.TITLE ?? ""
+                  
+                }
+                else {
+                      titleText =  "\n" + (item.TITLE ?? "")
+                }
+              let titleAttrString = NSAttributedString(string:titleText  , attributes: myAttributeBold)
+                
+             let descText = item.VALUE ?? ""
+             let descAttrString = NSAttributedString(string:descText  , attributes: myAttributeNormal)
+                finalText.append(titleAttrString)
+                 finalText.append(descAttrString)
+                lblTitleValue.attributedText = finalText
+                
+                */
+                
+                
             if i == 0 {
              
                  self.lblTitle1.text = item.TITLE ?? ""
@@ -675,7 +768,84 @@ class ProfileListCell: UITableViewCell {
                     self.lbl15.text = item.VALUE ?? ""
                 
             }
+ 
           }
+         else {
+                if i == 0 {
+                    
+              
+                    self.lblConst1.constant = 0
+                    
+                }
+                if i == 1 {
+                    
+                    self.lblConst2.constant = 0
+                    
+                }
+                if i == 2 {
+                    
+                  self.lblConst3.constant = 0
+                    
+                }
+                if i == 3 {
+                    
+                     self.lblConst4.constant = 0
+                    
+                }
+                if i == 4 {
+                    
+                     self.lblConst5.constant = 0
+                    
+                }
+                if i == 5 {
+                    
+                     self.lblConst6.constant = 0
+                    
+                }
+                if i == 6 {
+                   self.lblConst7.constant = 0
+                    
+                }
+                if i == 7 {
+                    self.lblConst8.constant = 0
+                    
+                }
+                if i == 8 {
+                    
+                     self.lblConst9.constant = 0
+                    
+                }
+                if i == 9 {
+                    
+                  self.lblConst10.constant = 0
+                    
+                }
+                if i == 10 {
+                    
+                  self.lblConst11.constant = 0
+                    
+                }
+                if i == 11 {
+                    
+                   self.lblConst12.constant = 0
+                    
+                }
+                if i == 12 {
+                    
+                   self.lblConst13.constant = 0
+                    
+                }
+                if i == 13 {
+                    
+                    self.lblConst14.constant = 0
+                    
+                }
+                if i == 14 {
+                    
+                    self.lblConst15.constant = 0
+                    
+                }
+            }
             
             i = i + 1
         }

@@ -32,6 +32,7 @@ public class BaseAddressView : UIView {
     var geoLabel: PlaceType = .all
     var profileGeoLabel = "0"
     var VC: UIViewController!
+     @IBOutlet weak var sView: UIView!
     weak var Delegate:BaseAddressDelegate!
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var dropDownLbl: UILabel!
@@ -134,91 +135,120 @@ extension BaseAddressView: GooglePlacesAutocompleteViewControllerDelegate, Updat
         var administrativeArea = ""
         var country = ""
         var name = ""
-        /*
+        var address = ""
+        var FROM_CITY_NAME = ""
          //GMSAutocompleteViewController
-         CITY_NAME = ""
+         let CITY_NAME = ""
          placesSearchController.isActive = false
          
-         
-         
-         if let lat  = place.coordinate?.latitude, let long = place.coordinate?.longitude {
-         
-         geocode = "\(lat),\(long)"
-         print("geocode ==",geocode)
-         }
-         
-         if let nm = place.name {
-         name = nm
-         }
-         
-         
-         
-         
-         if let cntry = place.country {
-         country = cntry
-         }
-         if let lc = place.administrativeArea {
-         administrativeArea =  ", " + lc
-         }
-         
-         if self.autoLocationType == "start" {
-         
-         if let lc = place.locality{
-         locality = lc
-         self.FROM_CITY_NAME = locality
-         print("place.locality ==",lc)
-         
-         }
-         else if let lc = place.subLocality {
-         locality = lc
-         self.FROM_CITY_NAME = locality
-         print("place.locality ==",lc)
-         
-         }
-         
-         
-         
-         if locality.contains(find: name) {
-         self.startLocTF.text = locality + administrativeArea + ", " + country
-         inputText = locality + ", " + country
-         }
-         else {
-         
-         self.startLocTF.text = name + ", " + locality + administrativeArea + ", " + country
-         inputText = name + ", " + locality + ", " + country
-         }
-         
-         
-         self.selectedStartCountry = country
-         inputLocGeo = geocode
-         
-         
-         }
-         else {
-         
-         if let lc = place.locality{
-         locality = lc
-         self.CITY_NAME = locality
-         cityName = self.CITY_NAME
-         print("place.locality ==",lc)
-         
-         }
-         
-         if locality.contains(find: name) {
-         self.endLocTF.text = locality  + administrativeArea +  ", " + country
-         }
-         else {
-         
-         self.endLocTF.text = name + ", " + locality + administrativeArea + ", " + country
-         }
-         
-         getCityImageUrl()
-         inputEndLocGeo = geocode
-         self.selectedEndCountry = country
-         geoVal = self.endLocTF.text ?? ""
-         
-         }
+        if profileGeoLabel == "1"
+        {
+            if let lc = place.administrativeArea {
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+               
+                return
+            }
+            else if let lc = place.locality {
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+              
+                return
+            }
+            else if let lc = place.subLocality {
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+                
+                return
+            }
+        }
+        else if profileGeoLabel == "2"{
+            if let nm = place.name {
+                name = nm
+            }
+            if let cntry = place.country {
+                country = cntry
+            }
+            if let lc = place.administrativeArea {
+                administrativeArea =  ", " + lc
+            }
+            var adress1Type = ""
+            if let lc = place.locality{
+                locality = lc
+                FROM_CITY_NAME = locality
+                print("place.locality ==",lc)
+                
+            }
+            else if let lc = place.subLocality {
+                locality = lc
+                FROM_CITY_NAME = locality
+                print("place.locality ==",lc)
+                
+            }
+            
+            
+            
+            if locality.contains(name) {
+                adress1Type = locality + administrativeArea + ", " + country
+            }
+            else {
+                
+                adress1Type = name + ", " + locality + administrativeArea + ", " + country
+            }
+            
+            self.dropDownLbl.text = adress1Type
+            self.Delegate.UpdateAddressText(view: self, index: 0, text:adress1Type )
+            
+            return
+            
+        }
+        else if profileGeoLabel == "3"{
+            if let lc = place.locality{
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+             
+                return
+            }
+            else if let lc = place.subLocality{
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+             
+                return
+            }
+            
+        }
+        /*
+        else if profileGeoLabel == "2"{
+            if let lc = place.locality {
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+               
+                return
+            }
+            else if let lc = place.subLocality {
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+                
+                return
+            }
+            else if let lc = place.administrativeArea {
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+                
+                return
+            }
+            
+        }
          */
+         else{
+             let lc = place.formattedAddress
+                self.dropDownLbl.text = lc
+                self.Delegate.UpdateAddressText(view: self, index: 0, text:lc )
+            
+                return
+            
+        }
+        
         
         if geoLabel == .cities {
             if let lc = place.locality{
@@ -229,9 +259,7 @@ extension BaseAddressView: GooglePlacesAutocompleteViewControllerDelegate, Updat
                 
             }
         }
-        VC.dismiss(animated: true) {
-            
-        }
+       
     }
 }
 

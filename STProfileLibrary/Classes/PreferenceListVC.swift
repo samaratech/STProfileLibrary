@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 
 class PreferenceListVC: BaseProfileVC {
+    var titleStr:String?
     @IBOutlet weak var tblView: UITableView!
     var listDataArr = [PrefTypeList]()
     override func viewDidLoad() {
@@ -22,7 +23,7 @@ class PreferenceListVC: BaseProfileVC {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
-        self.title = "Preference"
+        self.title = titleStr ?? "Preference"
         headerViewP.setBasicHeight(height: 0)
         basicViewHeight.constant = 185
         headerViewP.plusBtb.isSelected = true
@@ -80,7 +81,13 @@ class PreferenceListVC: BaseProfileVC {
         }
     }
 }
-extension PreferenceListVC: UITableViewDataSource, UITableViewDelegate {
+extension PreferenceListVC: UITableViewDataSource, UITableViewDelegate,UpdateVacationDelegation {
+    func updatevacationRule(isUpdate: Bool) {
+        if isUpdate == true {
+            
+        }
+    }
+    
   
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 48
@@ -93,15 +100,35 @@ extension PreferenceListVC: UITableViewDataSource, UITableViewDelegate {
         cell.setInfoData(self.listDataArr[indexPath.row])
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       let objPref = self.listDataArr[indexPath.row]
+        let podBundle = Bundle(for: PrefrerencePopupVC.self)
+        let story = UIStoryboard(name: "Main", bundle: podBundle)
+        
+        let obj = story.instantiateViewController(withIdentifier: "PrefrerencePopupVC") as! PrefrerencePopupVC
+        
+        obj.objPref = objPref
+        obj.titleStr = self.titleStr
+        obj.updateDelegate = self
+         self.present(obj, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(obj, animated: true)
+    }
 }
 
 class PreferenceTypeCell: UITableViewCell {
     @IBOutlet weak var viewpref: UIView!
     @IBOutlet weak var typeTxt: UILabel!
+     @IBOutlet weak var arrowBtn: UIButton!
+   
     var InfoList:PrefTypeList?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        let image = UIImage(named: "acount_arrow-point-to-right")
+        self.arrowBtn.setImage(image, for: .selected)
+        self.arrowBtn.setImage(image, for: .normal)
+        self.arrowBtn.setImage(image, for: .highlighted)
+        // Initialization code
     }
     func setInfoData(_ cellInfo: PrefTypeList) {
         self.viewpref.layer.borderWidth = 1

@@ -131,10 +131,7 @@ extension ProfileCalender: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataS
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        
-        
         if requestDate_start != nil && requestDate_end != nil {
-            
             if date.isBeforeDate(requestDate_start!) ||  date.isAfterDate(requestDate_end!) {
                 return
             }
@@ -151,7 +148,6 @@ extension ProfileCalender: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataS
         }
         if selectedDate_start != nil && date.isBeforeDate(selectedDate_start!) && startDateTtl == "end"{
             DataUtil.alertMessage("Trip End Date can not be less than Start Date", viewController: self)
-           
             return
         }
         

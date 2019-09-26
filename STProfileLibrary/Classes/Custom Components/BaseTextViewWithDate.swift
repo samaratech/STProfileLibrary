@@ -11,12 +11,13 @@ import JTAppleCalendar
 
 protocol BaseDateViewDelegate: class {
     
-    func UpdateDateBaseText(view: BaseTextViewWithDate,text: String)
+    func UpdateDateBaseText(view: BaseTextViewWithDate,text: String,select_date: Date)
 }
 
 public class BaseTextViewWithDate : UIView {
     var viewVC: UIViewController!
     var selecteddate: Date!
+     var requestDate_start: Date?
     @IBOutlet weak var sView: UIView!
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var title_lbl: UILabel!
@@ -69,6 +70,9 @@ public class BaseTextViewWithDate : UIView {
             vc.selectedDate = self.selecteddate
             
         }
+        if requestDate_start != nil {
+             vc.requestDate_start = self.requestDate_start
+        }
       //  vc.requestDate_start = Date()
         viewVC.present(vc, animated: true, completion: nil)
         // viewVC.navigationController?.pushViewController(vc, animated: true)
@@ -84,7 +88,8 @@ public class BaseTextViewWithDate : UIView {
 extension BaseTextViewWithDate : UITextFieldDelegate ,CalenderSelectDelegate {
     func updateCalenderSelectionDate(date_sel: Date, date_type: String) {
         let txt = DateUtil.convertDateToString(date: date_sel, reqFormat: DateUtil.AMADEUS_DATE)
-        Delegate.UpdateDateBaseText(view: self, text: txt)
+        Delegate.UpdateDateBaseText(view: self, text: txt, select_date: date_sel)
+      //  Delegate.UpdateDateBaseText(view: self, text: txt)
         self.generic_textField.text = txt
         
         //        selecteddate = date_sel;
@@ -96,11 +101,13 @@ extension BaseTextViewWithDate : UITextFieldDelegate ,CalenderSelectDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text?.count ?? 0 < 1 {
             let txt = DateUtil.convertDateToString(date: Date(), reqFormat: DateUtil.AMADEUS_DATE)
-            Delegate.UpdateDateBaseText(view: self, text: txt)
+            Delegate.UpdateDateBaseText(view: self, text: txt, select_date: Date())
+         //   Delegate.UpdateDateBaseText(view: self, text: txt)
             self.generic_textField.text = txt
         }
         else {
-            Delegate.UpdateDateBaseText(view: self, text: textField.text ?? "no text")
+            Delegate.UpdateDateBaseText(view: self, text: textField.text ?? "no text", select_date: Date())
+           // Delegate.UpdateDateBaseText(view: self, text: textField.text ?? "no text")
         }
     }
 }

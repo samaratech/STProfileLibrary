@@ -63,6 +63,11 @@ public class UserBasicInfo:Decodable  {
     var ADDRESS1: String?
     var ADDRESS2: String?
     var ADDRESS3: String?
+    var CITY: String?
+    var STATE_CODE: String?
+    var COUNTRY_CODE: String?
+    var POSTAL_CODE: String?
+     var GENDER: String?
     
 }
 

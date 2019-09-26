@@ -21,11 +21,17 @@ public class BaseProfileVC: UIViewController {
         }
         else {
        // headerViewP.setProfileImages(imageName: "farmood.jpg")
+            headerViewP.vc = self
         headerViewP.plusBtb.addTarget(self, action: #selector(setBasicInfoOpenClose(btn:)), for: .touchUpInside)
+//            let imageEdit = UIImage(named: "edit")
+//            self.headerViewP.editBtn.setImage(imageEdit, for: .selected)
+//            self.headerViewP.editBtn.setImage(imageEdit, for: .normal)
+//             self.headerViewP.editBtn.setImage(imageEdit, for: .highlighted)
         }
         
         if noDataFound_label != nil {
             noDataFound_label.text = noDataTxt_account
+            
         }
        
       //  headerViewP.setBasicHeight(height: 0)
@@ -51,18 +57,14 @@ public class BaseProfileVC: UIViewController {
     func removePassportew(type: String,recordId: String,success: @escaping(String) -> Void) {
         
     }
-    func removePassport(type: String,recordId: String,success: @escaping(Bool) -> Void) {
+    func removePassport(urlName: String,type: String,recordId: String,success: @escaping(Bool) -> Void) {
                 var params: Parameters = [:]
-                params["ORG_ID"] = "93"
-                params["LOCATION_ID"] = "66"
-                params["TOKEN"] = "92b2ae6292946dcd6caee78496d98065"
-                params["SIGNIN_TYPE"] = "P"
-                params["RECORD_TYPE"] = type
-                params["RECORD_ID"] = recordId
+             //   params["RECORD_TYPE"] = type
+                params[type] = recordId
         
         let postParamHeaders = [String: String]()
         
-        ServerCommunication.getDataWithGetWithDataResponse(url: "deteleProfileData", parameter: params, HeaderParams: postParamHeaders, methodType:.post, viewController: self, success: { (successResponseData) in
+        ServerCommunication.getDataWithGetWithDataResponse(url: urlName, parameter: params, HeaderParams: postParamHeaders, methodType:.post, viewController: self, success: { (successResponseData) in
             
             success(true)
             /*
