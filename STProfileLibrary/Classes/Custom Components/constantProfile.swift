@@ -11,7 +11,7 @@ let cellColor = UIColor(red: 239.0/255.0, green: 240.0/255.0, blue: 239.0/255.0,
 let stripColor = UIColor(red: 16.0/255.0, green: 168.0/255.0, blue: 90.0/255.0, alpha: 1)
 var noDataTxt_account = "You don't have any records!!\n Please add new record."
  var basicInfoG:UserBasicInfo?
-var GOOGLE_KEY = "AIzaSyC8dkgzrAwjw17PJB2hSks_VCdOqJzlSBU"
+var GOOGLE_KEY = ""
 
  var baseUrl_profile = ""
  var LOCATION_ID_profile = ""
