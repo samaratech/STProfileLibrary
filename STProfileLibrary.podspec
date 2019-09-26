@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'STProfileLibrary'
-s.version          = '1.0.6'
+s.version          = '1.0.7'
 s.summary          = 'This is use for hanlding the profile'
 
 s.description      = <<-DESC
