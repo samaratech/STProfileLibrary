@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'STProfileLibrary'
-s.version          = '1.0.7'
+s.version          = '1.0.9'
 s.summary          = 'This is use for hanlding the profile'
 
 s.description      = <<-DESC
@@ -25,7 +25,7 @@ s.resource_bundles = {
 # s.public_header_files = 'Pod/Classes/**/*.h'
 
 s.dependency 'MBProgressHUD'
-s.dependency 'IQKeyboardManagerSwift'
+s.dependency 'IQKeyboardManagerSwift', '~> 6.1.1'
 s.dependency 'DropDown'
 s.dependency 'CountryPickerSwift'
 s.dependency 'GooglePlacesSearchController'
