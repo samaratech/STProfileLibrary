@@ -26,7 +26,7 @@ class SelectCountryViewController: UIViewController {
         self.backBtn.setImage(image1, for: .normal)
         self.backBtn.setImage(image1, for: .highlighted)
 
-        // Do any additional setup after loading the view.
+        
 //         self.countries = CountryPicker.countryNamesByCode()
     }
     @IBAction func backBtnClicked(){
