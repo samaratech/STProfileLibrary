@@ -29,6 +29,13 @@ class DelegateListVC: BaseProfileVC {
         let image = UIImage(named: "acount_plus_icon")?.withRenderingMode(.alwaysOriginal)
         buttonRightItem = UIBarButtonItem(image:image, style: .plain, target: self, action: #selector(addNewClicked))
         self.navigationItem.rightBarButtonItem  = buttonRightItem
+        let imageback = UIImage(named: "acount_back_arrow")
+        let button1 = UIBarButtonItem(image:imageback, style: .plain, target: self, action: #selector(backBtnClicked))
+        self.navigationItem.leftBarButtonItem  = button1
+        
+    }
+    @objc func backBtnClicked(){
+        self.navigationController?.popViewController(animated: true)
     }
     @objc func addNewClicked() {
         let podBundle = Bundle(for: VacationListVC.self)

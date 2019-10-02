@@ -197,7 +197,24 @@ import Alamofire
         let imgData = image.jpegData(compressionQuality: 0.6)
         ServerCommunication.postProfilePictureHandler(url: "upload_profile_image", postParam: params, imgData: imgData!, viewController: vc, success: { (successResponseData) in
             self.profImgview.image = image
-          //  self.vc.dismiss(animated: true, completion: nil)
+            //.........
+            if successResponseData.data != nil {
+                if let json = successResponseData.result.value as? NSDictionary {
+                    if let dic = json["data"] as? NSDictionary {
+                        //..
+                        if let profileImageUrl = dic.value(forKey: "PROFILE_IMAGE") as? String {
+                            UserDefaults.standard.set(profileImageUrl, forKey: "profileImgUrl")
+                            
+                            
+                        }
+                    }
+                    else {
+                        
+                    }
+                    
+                }
+            }
+          //..
             
         }) { (dic) in
             

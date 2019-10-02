@@ -91,6 +91,16 @@ class ImageValue:Decodable  {
     var HR_PROFILE_ATTRIBUTE_ID: String?
     var IMAGE_URL: String?
 }
+class HRForData:Decodable  {
+    var LOOKUP_NAME: String?
+    var MULTIPLE_ROWS: String?
+    var ATTRIBUTES:[AttributeForm]?
+}
+
+class HRForDataRes:Decodable {
+    let success: Bool?
+    var data : [HRForData]?
+}
 
 
 

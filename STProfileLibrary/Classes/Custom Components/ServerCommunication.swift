@@ -18,6 +18,7 @@ class ServerCommunication: NSObject {
         param["ORG_ID"] = ORG_ID_profile
         param["SIGNIN_TYPE"] = SIGNIN_TYPE_profile
         param["TOKEN"] = TOKEN_profile
+         param["SYSTEM_ID"] = SYSTEM_ID
         let urlFinal = baseUrl_profile + url
         print("urlFinal: \(urlFinal) ")
         print("Post Parameter: \(param) ")

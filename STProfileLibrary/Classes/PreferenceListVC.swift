@@ -32,6 +32,13 @@ class PreferenceListVC: BaseProfileVC {
         self.tblView.estimatedRowHeight = 200;
         self.perform(#selector(getData), with: nil)
        // self.getData()
+        let imageback = UIImage(named: "acount_back_arrow")
+        let button1 = UIBarButtonItem(image:imageback, style: .plain, target: self, action: #selector(backBtnClicked))
+        self.navigationItem.leftBarButtonItem  = button1
+        
+    }
+    @objc func backBtnClicked(){
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func getData() {

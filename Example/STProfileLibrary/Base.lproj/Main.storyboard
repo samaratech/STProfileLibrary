@@ -66,5 +66,44 @@
             </objects>
             <point key="canvasLocation" x="53.600000000000001" y="686.80659670164926"/>
         </scene>
+        <!--Dash Board View Controller-->
+        <scene sceneID="wcL-GD-34E">
+            <objects>
+                <viewController storyboardIdentifier="DashBoardViewController" id="ez5-9e-IVB" customClass="DashBoardViewController" customModule="STProfileLibrary_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2BF-hJ-lFE"/>
+                        <viewControllerLayoutGuide type="bottom" id="kCY-7c-9w6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Xa-pN-42g">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86x-Kt-QqB">
+                                <rect key="frame" x="65" y="311" width="245" height="45"/>
+                                <color key="backgroundColor" red="0.062745098040000002" green="0.6588235294" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="245" id="1pv-ZS-DPN"/>
+                                    <constraint firstAttribute="height" constant="45" id="Hg0-bn-d3E"/>
+                                </constraints>
+                                <state key="normal" title="Profile Links">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="callProfile" destination="ez5-9e-IVB" eventType="touchUpInside" id="hq8-fx-gwk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="86x-Kt-QqB" firstAttribute="centerX" secondItem="0Xa-pN-42g" secondAttribute="centerX" id="prK-ZJ-X4W"/>
+                            <constraint firstItem="86x-Kt-QqB" firstAttribute="centerY" secondItem="0Xa-pN-42g" secondAttribute="centerY" id="uWR-FW-iVi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Usp-4y-e9R"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bTQ-P1-V7M" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="992.79999999999995" y="27.436281859070466"/>
+        </scene>
     </scenes>
 </document>

@@ -19,6 +19,7 @@ public class HomeProfileVC: BaseProfileVC {
     public var allowCashAdvance_home: String?
     public var ALLOW_EXPENSES_home: String?
     public var ALLOW_NT_EXPENSES_home: String?
+    public var system_id: String?
     public var googleKey: String?
 @IBOutlet weak var profileCollectioView:UICollectionView!
     var LookUpsTypeArr = [ProfileLookupType]()
@@ -54,7 +55,12 @@ public class HomeProfileVC: BaseProfileVC {
         if let ALLOW_NT_EXPENSES = ALLOW_NT_EXPENSES_home {
             ALLOW_NT_EXPENSES_profile = ALLOW_NT_EXPENSES
         }
-        
+        if let sID =  system_id {
+         SYSTEM_ID = sID
+        }
+        else {
+            SYSTEM_ID = ""
+        }
           //baseUrl_Profile = ""
          headerViewP.setBasicHeight(height: 0)
         basicViewHeight.constant = 185
